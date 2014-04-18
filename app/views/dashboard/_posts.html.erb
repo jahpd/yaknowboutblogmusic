@@ -1,0 +1,15 @@
+<div class="breadcrumb">
+  <% if @posts.length != 0 %>
+    <% @posts.each {|post| %>
+      <div class="btn-default">@<%= post.author %> | <%= post.title %><br/>
+        <br/>
+        <%= post.doc %><br/>
+        <br/>
+        <%= link_to "Hear code", "/posts/#{post.id}/code" %>
+      </div>
+      <br/>
+    <% } %>
+  <% else %>
+    <p class="has-sucess"> Sorry, we not found any post yet... But you can be the <%= link_to 'first!', new_post_path %></p>
+  <% end %>
+</div>

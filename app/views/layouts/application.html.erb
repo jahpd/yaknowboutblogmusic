@@ -1,0 +1,22 @@
+<% @title = "yaknowboutblogmusic" %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @title %></title>
+
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true%>
+ 
+  <%= stylesheet_link_tag    "bootstrap.min.css", "data-turbolink-track" => true %>
+  <%= javascript_include_tag "bootstrap.min.js", "data-turbolink-track" => true %>
+ 
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render 'layouts/header' %>
+  <%= render 'layouts/notice' %>
+  <br/><br/>
+  <%= yield %>
+  <%= render 'layouts/footer' %>
+</body>
+</html>

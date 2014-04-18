@@ -1,0 +1,7 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+hello:
+  author: some_user
+  title: Hello World!
+  doc: Hello world documentation!
+  code: -> console.log "Hello World!"
