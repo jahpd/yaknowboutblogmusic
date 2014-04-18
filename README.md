@@ -1,7 +1,6 @@
 # Gibberish Experiments
 
-_Gibberish Experiments_ é um servidor [Rails](http://rubyonrails.org/) dedicado ao ensino de síntese sonora e design sonoro em _browsers_
-que suportem HTML5, utilizando a biblioteca [Gibberish.js](http://github.com/charlieroberts/Gibberish)
+_Gibberish Experiments_ é um servidor [Rails](http://rubyonrails.org/) dedicado ao ensino de síntese sonora e design sonoro em _browsers_, (bem como de composição eletroacústica colaborativa), utilizando a biblioteca [Gibberish.js](http://github.com/charlieroberts/Gibberish)
 
 # Baixando este software
 
@@ -17,7 +16,7 @@ ou se você não ganhou a confiança desses comandos, simplismente baixe o .zip 
 
 ## Ruby
 
-Este servidor está sendo desenvolvido sob código [Ruby-2.0.0](https://www.ruby-lang.org/pt/downloads/) e 
+Este servidor está sendo desenvolvido sob código [Ruby-2.1.0](https://www.ruby-lang.org/pt/downloads/) e 
 [Ruby on Rails 4.0](https://www.rails.org); para baixar no seu sistema operacional, verifique abaixo;
 
 ### Linux
@@ -26,7 +25,10 @@ Este servidor está sendo desenvolvido sob código [Ruby-2.0.0](https://www.ruby
 
 ``` 
 	$ sudo apt-get install ruby
+        $ \curl -sSL https://get.rvm.io | bash -s stable --ruby=2.1.0 --rails
 ```
+
+Isso irá instalar as versões apropriadas de ruby e rails
 
 #### Windows
 
@@ -39,6 +41,8 @@ Siga esse [tutorial](http://code.tutsplus.com/tutorials/how-to-install-ruby-on-a
 ou [esse](https://rvm.io/rvm/install). 
 
 ## Rails
+
+(caso tenha usado a opção --rails no comando 'curl' , vc pode pular essa etapa)
 
 Uma vez instalado o Ruby, devemos instalar algumas dependencias (GEMas); 
 para isso vá até a linha de comando:
@@ -66,7 +70,7 @@ Vá até a pasta do _software_
 instale as dependências necessárias com o comando _bundle_
 
 ```
-	$ bundle
+	$ bundle install
 ```
 
 e finalmente inicialize o servidor
@@ -101,12 +105,20 @@ Todos os testes estão sendo feitos na pasta _tests_ (duhh); é só rodar:
 Hackeie, ajude-me a desenvolver um servidor seguro e com qualidade de audio :)
 
 - Segurança:
-	- Posts são scripts, devem ser validados com códigos de síntese e não permitir nenhum outro código
+	- Posts são scripts, devem ser validados com códigos de síntese e não permitir nenhum outro código malicioso;
 - Áudio:
-	- Verificar a razão pela qual o sintetizador está sofrendo de x-runs
+	- Verificar a razão pela qual o sintetizador está sofrendo de x-runs conforme se usa o mouse;
+-Audits:
+        - Minimizar o tamanho dos cookies
+        - Otimizar a ordem dos estilos e scripts
+        - remover estilos não usados
 
 # Versões
 
+- 0.0.23
+  - Repositório mudou de [gibberish_experiments](https://github.com/jahpd/gibberish_experiments) para [yaknowboutblogmusic](https://github.com/jahpd/yaknowboutblogmusic)
+  - Adicionado suporte [Bootstrap](https://github.com/twbs/bootstrap)
+  - Adicionado suporte ao [Devise](https://github.com/plataformatec/devise) para autenticação de usuários
 - 0.0.22
   - Criado novos helpers para gerar os scritps necessários para integração Ace/Gibberails
   - Código correndo on-the-fly no editor
