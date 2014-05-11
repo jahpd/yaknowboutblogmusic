@@ -1,9 +1,13 @@
 class Post < ActiveRecord::Base
+  
+  validate :title,{
+    :format => { with: /\A[a-zA-Z]+\z/ },
+    :message => "only allows letters"
+  }
 
-   belongs_to :user
-
-   validates :title, presence: true
-   validates :doc, presence: true
-   validates :code, presence: true
+  validate :doc,{
+    :format => { with: /((\n{2})(\t|\s{4,})(.*))/ },
+    :message => "only allows letters"
+  }
 
 end

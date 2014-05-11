@@ -1,61 +1,25 @@
 source 'https://rubygems.org'
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
-
-# Use sqlite3 as the database for Active Record
+ruby '2.1.0'
+gem 'rails', '4.1.1'
 gem 'sqlite3'
-
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
-
-# Use Uglifier as compressor for JavaScript assets
+gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
-
-# Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
-
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes gem 'therubyracer', platforms: :ruby
-
-# Use jquery as the JavaScript library
 gem 'jquery-rails'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
-
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
-
-gem 'execjs'
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
-
-# Use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-gem 'debugger', group: [:development, :test]
-
-# Use Session store
-gem 'activerecord-session_store'
-
-# Use devise as authenticator
+gem 'jbuilder', '~> 2.0'
+gem 'sdoc', '~> 0.4.0',          group: :doc
+gem 'spring',        group: :development
+gem 'bootstrap-sass'
 gem 'devise'
-
-# Use OAuth as external authenticator
-gem 'omniauth'
-gem 'omniauth-github'
-
-# Use meta_request to inspect se things in chrome
+gem 'simple_form'
+gem 'thin'
 group :development do
-  gem 'meta_request'
+  gem 'better_errors'
+  gem 'binding_of_caller', :platforms=>[:mri_21]
+  gem 'quiet_assets'
+  gem 'rails_layout'
 end
+gem 'redcarpet'
+gem 'albino'
+gem 'nokogiri'

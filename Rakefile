@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Gibberails::Application.load_tasks
+Rails.application.load_tasks

@@ -4,7 +4,6 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-
 #emacs buffers
 **~
 *#*
@@ -19,16 +18,13 @@ README.rdoc
 
 # Ignore the default SQLite database (in development stage, comment the lines above).
 db/*.sqlite3
-bin/*
-
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
 
-# ignore Aptana config file and public files for sometime
+# ignore possible Aptana config file and public files for sometime
 /.project
-/public/
+
+# ignore node because will be installed by bundle
 /node
-*.rdoc
-*.keep

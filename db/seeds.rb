@@ -5,4 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-User.create(username: "usertest", email:"email@to.test", password:"nonfunzia", password_confirmation:"nonfunzia")
+user = CreateAdminService.new.call
+puts 'CREATED ADMIN USER: ' << user.email
+
+post = Post.create(id: 1, author: user.name, title:"Hello World", doc:"#This is a seeded post, why?\n\na simple markdown code to embeed database\n\n```\n\tconsole.log \'hello world!\'\n```")
+puts "CREATED POST: " << post.title

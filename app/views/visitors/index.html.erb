@@ -1,0 +1,8 @@
+<div>
+  <h3>Ya'now'bout'blog music, Why the lucky stiffer?</h3>
+  <%= link_to 'Users:', users_path %> <%= User.count %> registered,
+  <%= link_to 'Posts:', posts_path %> <%= Post.count %> writed
+</div>
+<br/>
+<%= render '/posts/list' %>
+

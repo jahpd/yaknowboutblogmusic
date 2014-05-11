@@ -1,146 +1,140 @@
-# Gibberish Experiments
 
-_Gibberish Experiments_ é um servidor [Rails](http://rubyonrails.org/) dedicado ao ensino de síntese sonora e design sonoro em _browsers_, (bem como de composição eletroacústica colaborativa), utilizando a biblioteca [Gibberish.js](http://github.com/charlieroberts/Gibberish)
+# Yaknowboutblogmusic
 
-# Baixando este software
 
-Para baixar este _software_, na linha de comando (supondo que já se tem [GIT]() instalado)
+This application was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem
+provided by the [RailsApps Project](http://railsapps.github.io/).
 
-```
-	$ git clone https://github.com/jahpd/gibberish_experiments
-```
-
-ou se você não ganhou a confiança desses comandos, simplismente baixe o .zip ao lado
-
-# Dependencias
-
-## Ruby
-
-Este servidor está sendo desenvolvido sob código [Ruby-2.1.0](https://www.ruby-lang.org/pt/downloads/) e 
-[Ruby on Rails 4.0](https://www.rails.org); para baixar no seu sistema operacional, verifique abaixo;
-
-### Linux
-
-#### Debian e sabores
-
-``` 
-	$ sudo apt-get install ruby
-        $ \curl -sSL https://get.rvm.io | bash -s stable --ruby=2.1.0 --rails
-```
-
-Isso irá instalar as versões apropriadas de ruby e rails
-
-#### Windows
-
-para usuários de windows, sugiro baixar no site [RubyInstallers](rubyinstaller.org). 
-Não esqueça de baixar também o DevKit.
-
-#### MacOSX
-
-Siga esse [tutorial](http://code.tutsplus.com/tutorials/how-to-install-ruby-on-a-mac--net-21664)
-ou [esse](https://rvm.io/rvm/install). 
-
-## Rails
-
-(caso tenha usado a opção --rails no comando 'curl' , vc pode pular essa etapa)
-
-Uma vez instalado o Ruby, devemos instalar algumas dependencias (GEMas); 
-para isso vá até a linha de comando:
+## Installing
 
 ```
-	$ gem install rails
+   $ git clone https://github.com/jahpd/yaknowboutblogmusic
+   $ bundle install
 ```
 
-Para os que gostam de trabalhar offline
-
-``` 
-	$ gem install rails --rdoc
-```
-
-Este comando irá baixar outras dependências, então paciencia
-
-# Rodando
-
-Vá até a pasta do _software_
+## Running
 
 ```
-	$ cd gibberish_experiments
+  $ rails s 
 ```
 
-instale as dependências necessárias com o comando _bundle_
-
-```
-	$ bundle install
-```
-
-e finalmente inicialize o servidor
-
-```
-	$ rails server
-```
-
-Isso criará um servidor rails com suporte do Gibberish.js para áudio; para tanto, abra seu navegador,
-digite localhost:3000 e você poderá acessar o aplicativo
-
-# Base de dados
-
-Provavelmente, durante o estágio de desenvolvimento, terá uma base de dados pré-criada para dar desenvolvimento
-ao projeto. Ela carregará scripts .coffee que descrevem uma série de rotinas de áudio. No estágio atual de desenvolvimento,
-ela será chamada de RAILS; De fato, os scripts são semelhantes a Postagens de um Blog; contém um título, author, data de criação
-e a publicação, escrita a partir de uma convenção.
-
-Futuramente, planejamos tirar essa base de dados do seu controle, pois fazer música pensando nisso é enfadonho;
-assim, um usuário pode criar suas próprias bibliotecas.
-
-# Testes
-
-Todos os testes estão sendo feitos na pasta _tests_ (duhh); é só rodar:
-
-```
-	$ ruby tests/arquivo_de_teste.rb
-```
-
-# TODO
-
-Hackeie, ajude-me a desenvolver um servidor seguro e com qualidade de audio :)
-
-- Segurança:
-	- Posts são scripts, devem ser validados com códigos de síntese e não permitir nenhum outro código malicioso;
-- Áudio:
-	- Verificar a razão pela qual o sintetizador está sofrendo de x-runs conforme se usa o mouse;
--Audits:
-        - Minimizar o tamanho dos cookies
-        - Otimizar a ordem dos estilos e scripts
-        - remover estilos não usados
-
-# Versões
-
-- 0.0.23
-  - Repositório mudou de [gibberish_experiments](https://github.com/jahpd/gibberish_experiments) para [yaknowboutblogmusic](https://github.com/jahpd/yaknowboutblogmusic)
-  - Adicionado suporte [Bootstrap](https://github.com/twbs/bootstrap)
-  - Adicionado suporte ao [Devise](https://github.com/plataformatec/devise) para autenticação de usuários
-- 0.0.22
-  - Criado novos helpers para gerar os scritps necessários para integração Ace/Gibberails
-  - Código correndo on-the-fly no editor
-  - BUG: Giberish não limpa adequadamente tabelas de audio entre as renderizações
-- 0.0.21
-  - Design Principal feito
-  - Editor de texto ace integrado
-  - Alguma Funcionabilidade entre servidor, editor e cliente de áudio:
-    - captura do código-fonte .coffee de áudio corrente na página
-    - comandos do editor:
-      - Windows:
-        - Ctrl+M - Renderiza código do editor
-        - Ctrl+. - Para o cliente de áudio (com problemas)
-- 0.0.2
-  - Inserido editor Ace
-  - Ace consegue executar códgos gerados por posts
-  - Conseguindo fazer Síntese sonora com javascript
-- 0.0.11
-  - Servidor Rails iniciado
-- 0.0.1
-  - Desenvolvido a base do servidor sinatra
-  - Adicionados simples códigos: sine, triangle, saw, pwm, band limited saw, white noise
+## Diagnostics
 
 
+This application was built with recipes that are NOT known to work together.
 
+This application was built with preferences that are NOT known to work
+together.
+
+If the application doesn’t work as expected, please [report an issue](https://github.com/RailsApps/rails_apps_composer/issues)
+and include these diagnostics:
+
+We’d also like to know if you’ve found combinations of recipes or
+preferences that do work together.
+
+Recipes:
+
+* controllers
+* core
+* deployment
+* email
+* extras
+* frontend
+* gems
+* git
+* init
+* learn_rails
+* models
+* prelaunch
+* rails_bootstrap
+* rails_devise
+* rails_devise_pundit
+* rails_foundation
+* rails_omniauth
+* rails_signup_download
+* railsapps
+* readme
+* routes
+* saas
+* setup
+* testing
+* tests4
+* views
+
+Preferences:
+
+* git: true
+* apps4: rails-devise
+* authentication: devise
+* authorization: false
+* better_errors: true
+* deployment: none
+* local_env_file: false
+* pry: false
+* quiet_assets: true
+* starter_app: false
+* dev_webserver: thin
+* prod_webserver: thin
+* database: sqlite
+* templates: erb
+* tests: none
+* frontend: bootstrap3
+* email: gmail
+* devise_modules: default
+* form_builder: simple_form
+* rvmrc: false
+* ban_spiders: true
+
+### Database
+
+This application uses SQLite with ActiveRecord.
+
+### Development
+
+-   Template Engine: ERB
+-   Testing Framework: Test::Unit
+-   Front-end Framework: Bootstrap 3.0 (Sass)
+-   Form Builder: SimpleForm
+-   Authentication: Devise
+-   Authorization: None
+-   Admin: None
+
+### Email
+
+The application is configured to send email using a Gmail account.
+
+Email delivery is disabled in development.
+
+
+### Documentation and Support
+
+This is the only documentation.
+
+
+### Similar Projects
+
+ - gibberish.js
+ - gibberish live coding environment
+ - vivace environment
+ - coffee-collider
+
+### Contributing
+
+If you make improvements to this application, please share with others.
+
+-   Fork the project on GitHub.
+-   Make your feature addition or bug fix.
+-   Commit with Git.
+-   Send the author a pull request.
+
+If you add functionality to this application, create an alternative
+implementation, or build an application that is similar, please contact
+me and I’ll add a note to the README so that others can find your work.
+
+### Credits
+
+- jahpd
+
+### License
+
+creative commons 3.0 cc-by-sa

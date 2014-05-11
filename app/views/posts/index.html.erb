@@ -1,18 +1,7 @@
-<h1><%= current_user.username %> posts</h1>
+<h1> <%= link_to "#{current_user.name}", "/users/#{current_user.id}"
+         %> posts</h1>
 
-<div>
-  <% @posts.each {|post| %>
-    <div class="post_box">@<%= post.author %> | <%= post.title %><br/>
-      <%= post.doc %>
-      <%= link_to "Hear code", "/posts/#{post.id}/code" %>
-      <div class="post_info">
-        <%= post.created_at %> | 
-        <%= link_to 'Edit', edit_post_path(post) %> |
-        <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></p>
-      </div>
-    </div>
-  <% } %>
-</div>
+<%= render 'list' %>
 
 <br>
 

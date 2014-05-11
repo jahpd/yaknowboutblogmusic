@@ -1,0 +1,19 @@
+<% @posts.each do |post| %>
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+              <%= link_to "@#{post.author}", "/users" %> <%= post.title %> 
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <%= markdown_for post %>
+            <%= choice_created_or_updated_at_for post %>
+          </div>
+        </div>
+      </div>
+    </div>     
+<% end %>

@@ -1,7 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-hello:
-  author: some_user
-  title: Hello World!
-  doc: Hello world documentation!
-  code: -> console.log "Hello World!"
+one:
+  author: MyString
+  title: MyString
+  doc: MyText
+
+two:
+  author: MyString
+  title: MyString
+  doc: MyText
