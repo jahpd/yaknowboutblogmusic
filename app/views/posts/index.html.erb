@@ -1,8 +1,4 @@
-<h1> <%= link_to "#{current_user.name}", "/users/#{current_user.id}"
-         %> posts</h1>
-
+<h1><%= link_to "#{current_user.name}", "/users/#{current_user.id}"%> posts</h1>
 <%= render 'list' %>
-
-<br>
-
+<br/>
 <%= link_to 'New Post', new_post_path %>

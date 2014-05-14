@@ -43,6 +43,7 @@ Recipes:
 * gems
 * git
 * init
+
 * learn_rails
 * models
 * prelaunch

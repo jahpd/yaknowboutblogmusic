@@ -21,5 +21,8 @@ group :development do
   gem 'rails_layout'
 end
 gem 'redcarpet'
-gem 'albino'
+gem 'pygments.rb'
 gem 'nokogiri'
+gem 'rubypython'
+
+
