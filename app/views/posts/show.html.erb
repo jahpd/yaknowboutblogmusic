@@ -12,9 +12,9 @@
 
 <div>
   <strong>Doc:</strong>
-  <%= h markdown_for @post %>
+  <%= markdown_for @post %>
 </div>
 <br/>
-
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
+

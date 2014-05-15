@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :hear]
   before_filter :authenticate_user!, only:[:show, :new, :edit, :update, :destroy]
   before_filter :all_posts_from_current_user, only: [:index]
 
@@ -20,6 +20,10 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+  end
+
+  def hear
+    @code = CoffeeScript.compile params[:c]
   end
 
   # POST /posts
