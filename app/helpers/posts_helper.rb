@@ -1,39 +1,37 @@
 require 'open-uri'
 
 module PostsHelper
-
   
   # view more on http://richonrails.com/articles/rendering-markdown-with-redcarpet
   def markdown_for(post)
     options = {
-      filter_html:     true,
-      hard_wrap:       true, 
-      link_attributes: { rel: 'nofollow', target: "_blank" },
+      no_intra_emphasis:   true,
+      tables:              true,
+      fenced_code_blocks:  true,
+      autolink:            true,
+      strikethrough:       true,
+      space_after_headers: true,
+      superscript:         true,
+      filter_html:         true,
+      hard_wrap:           true, 
+      link_attributes:     { rel: 'nofollow', target: "_blank" },
       space_after_headers: true
     }
  
-    extensions = {
-      autolink:                     true,
-      superscript:                  true,
-      #disable_indented_code_blocks: true,
-      #fenced_code_blocks:           true
-    }
     renderer = Redcarpet::Render::HTML.new(options)
-    markdown = Redcarpet::Markdown.new(renderer, extensions)
+    markdown = Redcarpet::Markdown.new(renderer)
     html = markdown.render(post.doc)
-    syntax_highlighter(html).html_safe
+    syntax_highlighter(html, :title => post.title).html_safe
   end
 
-  def syntax_highlighter(html)
+  def syntax_highlighter(html, options)
      # saves whole code and create a new html fragment
     doc = Nokogiri::HTML(html)
 
-    # loop through all posts:
-    # div.panel-body is where text located
-    # copy text from <p><code/></p> and parse it
-    # remove <p><code/></p>
+    # replace code with div
+    # TODO kill empty <p/> 
     doc.css('code').each do |code|
-      code.replace Pygments.highlight(code.text, :lexer => "coffee-script")
+      code.replace Pygments.highlight code.text, :lexer => "coffee-script", :options => {linenos: :table, linespans: 'line'}
     end
     
     doc.to_s
