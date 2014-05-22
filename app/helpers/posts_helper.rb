@@ -42,10 +42,5 @@ module PostsHelper
     end
   end
 
-  def yaknow_include_tags
-    javascript_include_tag "gibberish_2.0.js", "coffee-script", "ace", "mode-coffee", "worker-coffee", "theme-monokai"
-  end
-  
-
 end
 

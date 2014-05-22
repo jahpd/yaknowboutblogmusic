@@ -24,5 +24,3 @@ gem 'redcarpet'
 gem 'pygments.rb'
 gem 'nokogiri'
 gem 'rubypython'
-
-
