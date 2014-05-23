@@ -1,19 +1,19 @@
 console = window.console
 
-RAILS = 
+gac = 
 
   initialized: false
           
   clean: (callback) ->
     console.log 'Operating cleaning...'
-    if RAILS.window.INITialized or false
+    if gac.window.INITialized or false
       Gibberish.clear()
     callback()
 
   init: (callback) ->
     console.log 'window.INITializing Gibberails audio-client...'
     try 
-      Gibberish.window.INIT()
+      Gibberish.init()
       Gibberish.Time.export()
       Gibberish.Binops.export()
       if callback then callback()
@@ -27,13 +27,12 @@ RAILS =
       js = unescape js
       if callback then callback !js, js
     catch e
-      RAILS.window.INITialized = false
+      gac.window.INITialized = false
       alert "#{compile.prototype.name}:\n#{js.map}#{e}"
       
   run: (callback)->
     console.log 'Operating compilation...'
-    RAILS.execute CoffeeScript.compile, RAILS.editor.getValue(), (err, js) ->
-      if callback then callback err, eval js else eval js
+    gac.execute CoffeeScript.compile, gac.editor.getValue(), (err, js) -> if callback then callback err, eval js else eval js
 
   checkfloats: (k, v)->
     b = false
@@ -58,9 +57,9 @@ RAILS =
 # Após inicializar, limpe, re-inicie o servidor de audio e execute a função
 # dada pelo usuario depois de um tempo determinado
 window.INIT = (time, callback) -> 
-  setTimeout -> RAILS.clean -> RAILS.init ->
+  setTimeout -> gac.clean -> gac.init ->
     console.log "! RUnNINg !"
-    RAILS.initialized = true
+    gac.initialized = true
     callback() 
   , time
 
@@ -93,9 +92,9 @@ window.GEN = (n, o, c) ->
 # _return_ *Gibberish.Ugen*  
 window.GEN_RAND = (n, o, c) ->
   for k, v of o
-    if RAILS.checkfloats(k, v)
+    if gac.checkfloats(k, v)
       o[k] = Gibberish.rndf v[0], v[v.length-1] 
-    else if RAILS.checkints(k, v)
+    else if gac.checkints(k, v)
       o[k] = Gibberish.rndi v[0], v[v.length-1]
     else
       o[k] = v     

@@ -31,7 +31,12 @@ module AceHelper
     protected
 
     def hook_post_script(code)
-      src = "editor.setValue '#{escape_javascript(code)}'\n"
+      _code =  COMMENT_MESSAGE
+      _code << code
+      
+      ### empty editor first to avoid code accumulation
+      src = "editor.setValue('')\n"
+      src << "editor.setValue '#{escape_javascript(_code)}'\n"
       src << "console.log 'code script embeeded to editor!'\n"
     end
 
