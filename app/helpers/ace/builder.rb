@@ -21,23 +21,26 @@ module AceHelper
       "#{active_script(:RAILS)}\nconsole.log 'audio library loaded!'\n"
     end
 
-    def build_script(code)
+    def build_script(code_string)
       string = hook_editor()
-      string << hook_post_script(code)
+      string << clear_ace()
       string << hook_commands()
-      javascript_tag CoffeeScript.compile(string, :bare => true)
+      string << hook_post_script(code_string)
+      #string << hook_run()
+      
+      javascript_tag CoffeeScript.compile(string, :bare => true), {:id => "generated_script"}
     end
 
     protected
 
-    def hook_post_script(code)
-      _code =  COMMENT_MESSAGE
-      _code << code
-      
-      ### empty editor first to avoid code accumulation
-      src = "editor.setValue('')\n"
-      src << "editor.setValue '#{escape_javascript(_code)}'\n"
-      src << "console.log 'code script embeeded to editor!'\n"
+    def clear_ace
+      "editor.setValue('')\n"
+    end
+
+    def hook_post_script(code_string)
+      _code =  COMMENT_MESSAGE <<  code_string << "\n"
+      _code << "editor.setValue '#{escape_javascript(_code)}'\n"
+      _code << "console.log 'code script embeeded to editor!'\n"
     end
 
     def hook_editor

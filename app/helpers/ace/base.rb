@@ -27,11 +27,11 @@ module AceHelper
       :commands => {                       # Commands Of Ace editor, please use CoffeeScript syntax
         :render => {
           :bindKeys => "win: 'Ctrl-Enter', linux: 'Ctrl-Enter', mac: 'Command-Enter'",
-          :exec => "exec: (e) -> RAILS.cleanAndCompile e, (js) -> eval js"
+          :exec => "(e) -> RAILS.cleanAndCompile e, (js) -> eval js"
         },
         :stop => {
           :bindKeys => "win: 'Ctrl-.', linux: 'Ctrl-.', mac: 'Command-.'",
-          :exec => "exec: (e) -> RAILS.clean -> console.log 'yay! cleaned!'"
+          :exec => "(e) -> RAILS.clean -> console.log 'yay! cleaned!'"
         }
       }
     }
@@ -40,30 +40,32 @@ module AceHelper
                        # ======================================================================================
                        # Hi, this is an ace editor                        
                        # 
-                       # All previous posts in index page
-                       # show a way to use coffee-script language
-                       # See old ones if you do not know anything
-                       #                  
-                       # You can use coffee-script here to change the above code           11       A 
-                       # Think in a way to make music                                     111       A
-                       # When done, you can use hotkeys to render or stop music:         111        A
-                       # - Render audio:                                                111        AA
-                       #   - Mac: Command + Enter                                        1         AAA
-                       #   - Linux / Windows: Ctrl + Enter                               1        AA AA  
-                       # - Stop audio:                                                   1       AA   AA
-                       #   - Mac: Command + .                                            1      AAAAAAAAA
-                       #   - Linux / Window: Ctrl + .                                    1     AA       AA
-                       #                                                                01    AAA       AAA
-                       # If you find any issue, please contact me in:                  0 0   AAAAAAAAAAAAAAA
-                       # https://github.com/jahpd/yaknowboutblogmusic/issues           0 0  AAA           AAA        
-                       #                                                                0
-                       # If you want to contribute with any code, fork it!    
+                       # All previous posts in index page                                    || 
+                       # show a way to use coffee-script language                           \/ \\
+                       # See old ones if you do not know anything                          \/   \\
+                       #                                                                  \/_____\\
+                       # You can use coffee-script here to change the above code         \/       \\
+                       # Think in a way to make music                                   \/         \\
+                       # When done, you can use hotkeys to render or stop music:        ------------            
+                       # - Render audio:                                               a            A
+                       #   - Mac: Command + Enter                                     aaa          AAA
+                       #   - Linux / Windows: Ctrl + Enter                           aa aa        AA AA  
+                       # - Stop audio:                                              aa   aa      AA   AA
+                       #   - Mac: Command + .                                      aaa   aaa    AAA   AAA
+                       #   - Linux / Window: Ctrl + .                             aa       aa  AA       AA
+                       #                                                         aaaaaaaaaaaaaAAAAAAAAAAAAA   
+                       # If you find any issue, please contact me in:           aaaaaaaaaaaaaAAAAAAAAAAAAAAA
+                       # https://github.com/jahpd/yaknowboutblogmusic/issues   aaa          aAA           AAA        
+                       #                                                      aaaaa        aaAAA         AAAAA
+                       # If you want to contribute with any code, fork it!   aaaaaaa      aaaAAAA       AAAAAAA
                        #
                        # If you want to reply, some sugestion, critic  
-                       # send email for xxx@yyyy.zzz                                                
+                       # send email for xxx@yyyy.zzz  
+                       # or join irc.freenode.net #labmacambira
+                       #                                              
                        # Happy live-coding!
                        # (DESTROY ME AND USE EDITOR!)
-                       # ======================================================================================
+                       # ======================================================================================\n
     """
    
   end

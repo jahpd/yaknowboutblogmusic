@@ -107,6 +107,7 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     redcarpet (3.1.1)
+    ruby-lzma (0.4.3)
     rubypython (0.6.3)
       blankslate (>= 2.1.2.3)
       ffi (>= 1.0.7)
@@ -171,6 +172,7 @@ DEPENDENCIES
   rails (= 4.1.1)
   rails_layout
   redcarpet
+  ruby-lzma
   rubypython
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
