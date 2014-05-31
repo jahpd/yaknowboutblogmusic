@@ -7,8 +7,25 @@ provided by the [RailsApps Project](http://railsapps.github.io/).
 
 ## Installing
 
+First of all, you need install Ruby on your machine (skip this if you
+already have)
+
+## Installing Ruby
+
+If you have Macosx or Linux, go to terminal
+
+```
+  $ \curl -sSL https://get.rvm.io | bash -s stable --rails
+```
+
+and wait a little.
+I will update for Windows installation latter.
+
+## Installing yaknowboutblogmusic locally:
+
 ```
    $ git clone https://github.com/jahpd/yaknowboutblogmusic
+   $ cd yaknowboutblogmusic
    $ bundle install
 ```
 
@@ -18,7 +35,14 @@ provided by the [RailsApps Project](http://railsapps.github.io/).
   $ rails s 
 ```
 
-## Diagnostics
+This will start a server on 127.0.0.1:3000
+If you want to start in another port:
+
+```
+  $ rails s - p 3001
+```
+
+# Diagnostics
 
 
 This application was built with recipes that are NOT known to work together.
@@ -102,6 +126,8 @@ This application uses SQLite with ActiveRecord.
 
 ### Email
 
+Email delivering isnt enabled yet. I must study...
+
 The application is configured to send email using a Gmail account.
 
 Email delivery is disabled in development.
@@ -111,13 +137,18 @@ Email delivery is disabled in development.
 
 This is the only documentation.
 
+But Documentation about Gibberish audio machine can be found [here](http://www.charlie-roberts.com/gibberish/),
+to help coders.
+
 
 ### Similar Projects
 
- - gibberish.js
- - gibberish live coding environment
- - vivace environment
- - coffee-collider
+ - [gibberish.js](https://github.com/charlieroberts/Gibberish) (the audio library used)
+ - [gibberish live coding environment](http://gibber.mat.ucsb.edu/)
+ - [vivace environment](http://void.cc/freakcoding/)
+ - [coffee-collider](https://github.com/mohayonao/CoffeeCollider)
+
+I suggest you read this [paper](http://www.mat.ucsb.edu/Publications/WebBrowser-as-Synth-Interface.pdf)
 
 ### Contributing
 

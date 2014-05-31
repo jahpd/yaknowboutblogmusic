@@ -40,7 +40,7 @@ module AceHelper
                        # ======================================================================================
                        # Hi, this is an ace editor                        
                        # 
-                       # All previous posts in index page                                    || 
+                       # All previous posts in index page                                     
                        # show a way to use coffee-script language                           \/ \\
                        # See old ones if you do not know anything                          \/   \\
                        #                                                                  \/_____\\
@@ -65,8 +65,7 @@ module AceHelper
                        #                                              
                        # Happy live-coding!
                        # (DESTROY ME AND USE EDITOR!)
-                       # ======================================================================================\n
-    """
+                       # ======================================================================================\n"""
    
   end
 end

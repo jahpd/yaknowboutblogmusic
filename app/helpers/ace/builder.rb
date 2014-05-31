@@ -22,32 +22,27 @@ module AceHelper
     end
 
     def build_script(code_string)
-      string = hook_editor()
-      string << clear_ace()
-      string << hook_commands()
-      string << hook_post_script(code_string)
-      #string << hook_run()
+      string = hook_editor MODE, THEME
+      string << hook_commands
+      string << hook_code(code_string)
+      string << hook_run()
       
       javascript_tag CoffeeScript.compile(string, :bare => true), {:id => "generated_script"}
     end
 
     protected
 
-    def clear_ace
-      "editor.setValue('')\n"
+    def hook_editor(mode, theme)
+      string  = "window.editor = editor = ace.edit('#{mode}_editor')\n"
+      string << "editor.setTheme 'ace/theme/#{theme}'\n" 
+      string << "editor.getSession().setMode 'ace/mode/#{mode}'\n"
+      string << "console.log 'Ace editor loaded!: {mode: #{mode}, theme: #{theme} }'\n"
     end
 
-    def hook_post_script(code_string)
-      _code =  COMMENT_MESSAGE <<  code_string << "\n"
-      _code << "editor.setValue '#{escape_javascript(_code)}'\n"
-      _code << "console.log 'code script embeeded to editor!'\n"
-    end
-
-    def hook_editor
-      src= "window.editor = editor =  ace.edit('coffee_editor')\n"
-      src << "editor.setTheme 'ace/theme/monokai'\n" 
-      src << "editor.getSession().setMode 'ace/mode/coffee'\n"
-      src << "console.log 'Ace editor loaded!'\n"""
+    def hook_code(code_string)
+      s = "#{COMMENT_MESSAGE}#{code_string}"
+      string = "editor.setValue '#{escape_javascript(s)}'\n"
+      string << "console.log 'code script embeeded to editor!'\n"
     end
 
     def hook_commands
@@ -60,7 +55,7 @@ module AceHelper
         }
         src << "  readOnly: true\n"
       }
-      src << "console.log 'commands added to editor!'"
+      src << "console.log 'commands added to editor!'\n"
     end
 
     def hook_run
