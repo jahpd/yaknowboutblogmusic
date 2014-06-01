@@ -21,20 +21,27 @@ module AceHelper
     
     protected
 
+    run = "(e) -> gac.run (err, js) ->"
+
     RENDER_OPTIONS = {
       :lang => MODE,                       # The running-language of web-application
       :theme => THEME,                     # Initial theme to Ace editor
       :commands => {                       # Commands Of Ace editor, please use CoffeeScript syntax
         :render => {
-          :bindKeys => "win: 'Ctrl-Enter', linux: 'Ctrl-Enter', mac: 'Command-Enter'",
-          :exec => "(e) -> RAILS.cleanAndCompile e, (js) -> eval js"
+          :bindKeys => "win: 'Ctrl-Enter', linux: 'Ctrl-Enter', mac: 'Ctrl-R'",
+          :exec => run
         },
         :stop => {
-          :bindKeys => "win: 'Ctrl-.', linux: 'Ctrl-.', mac: 'Command-.'",
-          :exec => "(e) -> RAILS.clean -> console.log 'yay! cleaned!'"
+          :bindKeys => "win: 'Ctrl-.', linux: 'Ctrl-.', mac: 'Command-S'",
+          :exec => "(e) -> gac.clean -> console.log 'yay! gibberish cleaned!'"
         }
+      },
+      :buttons => {
+        :render =>"$('#render').click (e)-> gac.run (err, js) -> console.log 'Compiled'",
+        :stop => "$('#stop').click (e)-> gac.clean (err, js) -> console.log 'cleaned'"
       }
     }
+
 
     COMMENT_MESSAGE = """
                        # ======================================================================================

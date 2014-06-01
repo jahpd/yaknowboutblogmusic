@@ -22,15 +22,21 @@ module AceHelper
     end
 
     def build_script(code_string)
-      string = hook_editor MODE, THEME
+      string = hook_gac()
+      string << hook_editor(MODE, THEME)
       string << hook_commands
       string << hook_code(code_string)
+      string << hook_buttons()
       string << hook_run()
       
       javascript_tag CoffeeScript.compile(string, :bare => true), {:id => "generated_script"}
     end
 
     protected
+
+    def hook_gac
+      active_script("gac-0.0.1")
+    end
 
     def hook_editor(mode, theme)
       string  = "window.editor = editor = ace.edit('#{mode}_editor')\n"
@@ -53,25 +59,35 @@ module AceHelper
         v.each_pair{|kk, vv| 
           src << "  #{kk}: #{vv}\n" 
         }
-        src << "  readOnly: true\n"
+        src << "  readOnly: false\n"
       }
       src << "console.log 'commands added to editor!'\n"
     end
 
+    def hook_buttons
+      src = ""
+      RENDER_OPTIONS[:buttons].each{|k, v|
+        src << "\n" << v
+      }
+      src
+    end
+   
     def hook_run
-      "RAILS.run()"
+      "\ngac.run()"
     end
 
     private
       
       VENDOR = "../../../vendor"
-      JAVASCRIPTS = "assets/javascripts/controllers/"
+      JAVASCRIPTS = "assets/javascripts/"
       FOLDER = "#{File.dirname(__FILE__)}/#{VENDOR}/#{JAVASCRIPTS}"
 
       def active_script(action)
         src = ""
-        File.foreach("#{FOLDER}/#{action}.js.coffee") { |line| src << line }
-        src
+        if File.exist? "#{FOLDER}/#{action}.js.coffee"
+          File.open("#{FOLDER}/#{action}.js.coffee", "r").each_line { |line| src << line }
+          src
+        end
       end
   end
 end

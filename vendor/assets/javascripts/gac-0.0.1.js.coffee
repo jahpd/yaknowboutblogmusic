@@ -6,19 +6,21 @@ gac =
           
   clean: (callback) ->
     console.log 'Operating cleaning...'
-    if gac.window.INITialized or false
+    if gac.window.initialized or false
       Gibberish.clear()
     callback()
-
+    
   init: (callback) ->
     console.log 'window.INITializing Gibberails audio-client...'
     try 
       Gibberish.init()
       Gibberish.Time.export()
       Gibberish.Binops.export()
+      gac.initialized = true
+      gac.alert()
       if callback then callback()
     catch e
-      alert e  
+      gac.alert()
   
   execute: (compile, data, callback) ->
     try
@@ -27,12 +29,11 @@ gac =
       js = unescape js
       if callback then callback !js, js
     catch e
-      gac.window.INITialized = false
       alert "#{compile.prototype.name}:\n#{js.map}#{e}"
       
   run: (callback)->
     console.log 'Operating compilation...'
-    gac.execute CoffeeScript.compile, gac.editor.getValue(), (err, js) -> if callback then callback err, eval js else eval js
+    gac.execute CoffeeScript.compile, window.editor.getValue(), (err, js) -> if callback then callback err, eval js else eval js
 
   checkfloats: (k, v)->
     b = false

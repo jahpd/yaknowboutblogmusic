@@ -37,6 +37,7 @@ GEM
     blankslate (3.1.2)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
+    bootstrap_flash_messages (1.0.0)
     builder (3.2.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -162,6 +163,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass
+  bootstrap_flash_messages (~> 1.0.0)
   coffee-rails (~> 4.0.0)
   devise
   jbuilder (~> 2.0)
