@@ -1,0 +1,7 @@
+<% if @info %>
+  Powered by 
+  <% @info.each {|i| %>
+    <%= link_to "#{i[:msg]} | ", i[:src] %>
+  <% } %>
+  Hosted at <%= link_to "github@jahpd","https://github.com/jahpd/yaknowboutblogmusic" %>
+<% end %>

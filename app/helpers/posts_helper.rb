@@ -1,10 +1,12 @@
 require "#{File.dirname(__FILE__)}/coffee_syntax"
 require "#{File.dirname(__FILE__)}/ace/builder"
+require "#{File.dirname(__FILE__)}/terminal/builder"
 require 'lzma'
 
 module PostsHelper
 
   include AceHelper::Builder
+  include TerminalJS::Builder
 
   # Renders entire post to markdown in .erb views. 
   # It already highlight a custom mrkdown for codes

@@ -20,7 +20,8 @@ gac =
       gac.alert()
       if callback then callback()
     catch e
-      gac.alert()
+      gac.
+      alert()
   
   execute: (compile, data, callback) ->
     try

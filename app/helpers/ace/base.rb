@@ -16,12 +16,13 @@ module AceHelper
      :ace,
      "theme-#{THEME}",
      "mode-#{MODE}",
-     "worker-#{MODE}",
+     "worker-#{MODE}"
     ]
     
     protected
 
-    run = "(e) -> gac.run (err, js) ->"
+    BASE_RUN =  "gac.run (err, js) -> if not err then window.terminal.print 'render: DONE' else t.print err\n"
+    BASE_CLEAR = "gac.clean (err, js) -> if not err then window.terminalr.print 'stop: DONE' else t.print err\n"
 
     RENDER_OPTIONS = {
       :lang => MODE,                       # The running-language of web-application
@@ -29,23 +30,22 @@ module AceHelper
       :commands => {                       # Commands Of Ace editor, please use CoffeeScript syntax
         :render => {
           :bindKeys => "win: 'Ctrl-Enter', linux: 'Ctrl-Enter', mac: 'Ctrl-R'",
-          :exec => run
+          :exec => "(e) ->\n  #{BASE_RUN}"
         },
         :stop => {
           :bindKeys => "win: 'Ctrl-.', linux: 'Ctrl-.', mac: 'Command-S'",
-          :exec => "(e) -> gac.clean -> console.log 'yay! gibberish cleaned!'"
+          :exec => "(e) ->\n  #{BASE_CLEAR}"
         }
       },
       :buttons => {
-        :render =>"$('#render').click (e)-> gac.run (err, js) -> console.log 'Compiled'",
-        :stop => "$('#stop').click (e)-> gac.clean (err, js) -> console.log 'cleaned'"
+        :render =>"$('#render').click (e)->\n  #{BASE_RUN}",
+        :stop => "$('#stop').click (e)->\n  #{BASE_CLEAR}"
       }
     }
 
-
     COMMENT_MESSAGE = """
                        # ======================================================================================
-                       # Hi, this is an ace editor                        
+                       # Hi, this is an ace editor integrated with terminal                    
                        # 
                        # All previous posts in index page                                     
                        # show a way to use coffee-script language                           \/ \\
@@ -60,8 +60,11 @@ module AceHelper
                        # - Stop audio:                                              aa   aa      AA   AA
                        #   - Mac: Command + .                                      aaa   aaa    AAA   AAA
                        #   - Linux / Window: Ctrl + .                             aa       aa  AA       AA
-                       #                                                         aaaaaaaaaaaaaAAAAAAAAAAAAA   
-                       # If you find any issue, please contact me in:           aaaaaaaaaaaaaAAAAAAAAAAAAAAA
+                       #                                                          AA       AA  aa       aa
+                       # Or you can use 'render' or 'stop' commands               AA       AA  aa       aa
+                       # Above you (buttons) or type them in terminal            aaaaaaaaaaaaaAAAAAAAAAAAAA   
+                       # If you find any issue, please contact me in:            AAAAAAAAAAAAAaaaaaaaaaaaaa 
+                       #                                                        aaaaaaaaaaaaaAAAAAAAAAAAAAAA
                        # https://github.com/jahpd/yaknowboutblogmusic/issues   aaa          aAA           AAA        
                        #                                                      aaaaa        aaAAA         AAAAA
                        # If you want to contribute with any code, fork it!   aaaaaaa      aaaAAAA       AAAAAAA
@@ -73,6 +76,5 @@ module AceHelper
                        # Happy live-coding!
                        # (DESTROY ME AND USE EDITOR!)
                        # ======================================================================================\n"""
-   
   end
 end

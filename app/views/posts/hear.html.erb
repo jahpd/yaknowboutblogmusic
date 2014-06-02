@@ -1,3 +1,12 @@
-<%= yaknow_include_tags %>
-<%= create_ace_wrapper %>
-<%= build_script decompress_for(@code) %>
+<nav id="app">
+  <div id="editor_wrapper">
+    <%= yaknow_include_tags %>
+    <%= create_ace_wrapper %>
+    <%= build_script decompress_for(@code) %>
+  </div>
+
+  <div id="terminal_wrapper">
+    <%= terminal_include_tag() %>
+    <%= terminal_build :id => "yaknowterm", :rows => 35 %>
+  </div>
+</nav>
