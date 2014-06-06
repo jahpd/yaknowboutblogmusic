@@ -24,7 +24,7 @@ module AceHelper
     def build_script(code_string)
       string = hook_gac()
       string << hook_editor(MODE, THEME)
-      string << hook_commands
+      string << hook_ace_commands(RENDER_OPTIONS[:commands], "\n  ")
       string << hook_code(code_string)
       string << hook_buttons()
       string << hook_run()
@@ -51,15 +51,15 @@ module AceHelper
       string << "console.log 'code script embeeded to editor!'\n"
     end
 
-    def hook_commands
+    def hook_ace_commands(commands, offset)
       src = ""
-      RENDER_OPTIONS[:commands].each{|k, v|
-        src << "editor.commands.addCommand\n"
-        src << "  name: '#{k}'\n"
+      commands.each{|k, v|
+        src << "editor.commands.addCommand#{offset}"
+        src << "name: '#{k}'#{offset}"
         v.each_pair{|kk, vv| 
-          src << "  #{kk}: #{vv}\n" 
+          src << "#{kk}: #{vv}#{offset}" 
         }
-        src << "  readOnly: false\n"
+        src << "readOnly: true\n"
       }
       src << "console.log 'commands added to editor!'\n"
     end

@@ -26,3 +26,4 @@ gem 'nokogiri'
 gem 'rubypython'
 gem 'ruby-lzma'
 gem "bootstrap_flash_messages", "~> 1.0.0"
+gem "cinch"

@@ -80,19 +80,25 @@
 .highlight .gd { color: #f92672; } /* Generic.Deleted & Diff Deleted */
 .highlight .gi { color: #a6e22e; } /* Generic.Inserted & Diff Inserted */
 
+.term-wrap{
+  border: solid grey 5px;
+}
+
 #editor_wrapper {
   float: left;
 }
 
 #terminal_wrapper {
-  margin-top: 0.9%;
+  margin-top: 1.6%;
+  margin-right: 0%;
   float: right;
 }
 
 #coffee_editor {
   position: absolute;
-  top: 8.45%;
-  right: 32.9%;
-  bottom: 9.1%;
+  top: 10.4%;
+  right: 35%;
+  bottom: 10.3%;
   left: 0.75%;
+  border: solid grey 5px;
 }

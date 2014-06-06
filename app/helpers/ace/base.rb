@@ -23,18 +23,23 @@ module AceHelper
 
     BASE_RUN =  " gac.run (err, js) -> window.terminal.type('# Running gibberish.js', '#0FA')\n"
     BASE_CLEAR = "gac.clean (err, js) -> window.terminal.type('# Cleaning gibberish.js', '#0FA')\n"
+    BASE_TERMINAL = "Terminal.setFocus true; window.terminal.type('# Exiting Ace editor', '#0FA')\n"
 
     RENDER_OPTIONS = {
       :lang => MODE,                       # The running-language of web-application
       :theme => THEME,                     # Initial theme to Ace editor
       :commands => {                       # Commands Of Ace editor, please use CoffeeScript syntax
         :render => {
-          :bindKeys => "win: 'Ctrl-Enter', linux: 'Ctrl-Enter', mac: 'Ctrl-R'",
+          :bindKeys => "win: 'Ctrl-Enter', linux: 'Ctrl-Enter', mac: 'Command+,'",
           :exec => "(e) ->\n  #{BASE_RUN}"
         },
         :stop => {
-          :bindKeys => "win: 'Ctrl-.', linux: 'Ctrl-.', mac: 'Command-S'",
+          :bindKeys => "win: 'Ctrl-.', linux: 'Ctrl-.', mac: 'Command-.'",
           :exec => "(e) -> #{BASE_CLEAR}"
+        },
+        :switch_2_terminal => {
+          :bindKeys => "win: 'Ctrl-T', linux: 'Ctrl-T', mac: 'Command-/'",
+          :exec => "(e) -> #{BASE_TERMINAL}"
         }
       },
       :buttons => {
@@ -43,8 +48,7 @@ module AceHelper
       }
     }
 
-    COMMENT_MESSAGE = """
-# ======================================================================================
+    COMMENT_MESSAGE = """# ======================================================================================
 # Hi, this is an ace editor integrated with terminal                    
 # 
 # All previous posts in index page                                     
