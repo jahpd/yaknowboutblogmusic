@@ -24,10 +24,6 @@ module TerminalJS
         :exec =>"gac.run (err, js) -> if not err then this.type('# Running gibberish.js', '#F00')",
         :help => "run coffeed gibberish.js audio machine!"
       },
-      :ace => {
-        :exec => "this.type('# Coffee-sound disabled')\n      Terminal.setFocus(false)",
-        :help => "swap to ace editor mode"
-      },
       :offset => {
         "\n    " => [:clear, :exit, :id, :stop, :run, :ace]
       }

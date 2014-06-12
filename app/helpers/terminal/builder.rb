@@ -14,9 +14,10 @@ module TerminalJS
     end
 
     def hook_terminal(opt)
-      """window.terminal = term = new Terminal({
+      """term =  window.terminal = new Terminal({
   rows: #{opt[:rows]}
-  greeting: '# #{opt[:id]} terminal enabled'
+  ps: '$ > '
+  greeting: \"#{opt[:id]} Terminal ready\"
   id: '_#{opt[:id]}'
   termDiv: 'term_#{opt[:id]}'
   crsrBlinkMode: true
@@ -26,8 +27,22 @@ module TerminalJS
     this.prompt()
   exitHandler: -> if term.closed==true then term.close()
   textColor: '#00FF00'})
-term.open()
-term.focus()"""     
+
+$('#term_#{opt[:id]}').hover((->
+  TermGlobals.keylock = false
+  term.focus()
+), (-> 
+  TermGlobals.setFocus false
+))
+
+$('#coffee_editor').hover((->
+  TermGlobals.keylock = true
+  window.editor.focus()
+), (-> 
+  window.editor.blur()
+))
+
+term.open()"""     
     end
 
     def hook_commands(commands)
@@ -53,11 +68,10 @@ term.focus()"""
         :id => opt[:id],
         :commands => hook_commands(TERM_COMMANDS)
       })
-      logger.info{string}
       js = CoffeeScript.compile(string, :bare => true)
       script = javascript_tag(js, {:id => "_#{opt[:id]}"})
       wrapped = content_tag(:div, script, {:id => "term_#{opt[:id]}"})
-      content_tag(:div, wrapped, {:class => 'term-wrap'})
+      content_tag(:div, wrapped, {:id => 'term-wrap'})
     end
 
   end

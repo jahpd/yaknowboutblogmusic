@@ -41,10 +41,6 @@ module AceHelper
           :bindKeys => "win: 'Ctrl-T', linux: 'Ctrl-T', mac: 'Command-/'",
           :exec => "(e) -> #{BASE_TERMINAL}"
         }
-      },
-      :buttons => {
-        :render =>"$('#render').click (e)-> #{BASE_RUN}",
-        :stop => "$('#stop').click (e)-> #{BASE_CLEAR}"
       }
     }
 

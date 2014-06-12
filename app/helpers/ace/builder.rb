@@ -26,8 +26,6 @@ module AceHelper
       string << hook_editor(MODE, THEME)
       string << hook_ace_commands(RENDER_OPTIONS[:commands], "\n  ")
       string << hook_code(code_string)
-      string << hook_buttons()
-      string << hook_run()
       
       javascript_tag CoffeeScript.compile(string, :bare => true), {:id => "generated_script"}
     end
@@ -62,18 +60,6 @@ module AceHelper
         src << "readOnly: true\n"
       }
       src << "console.log 'commands added to editor!'\n"
-    end
-
-    def hook_buttons
-      src = ""
-      RENDER_OPTIONS[:buttons].each{|k, v|
-        src << "\n" << v
-      }
-      src
-    end
-   
-    def hook_run
-      "\ngac.run()"
     end
 
     private
