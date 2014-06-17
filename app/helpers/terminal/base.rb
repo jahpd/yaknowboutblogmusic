@@ -1,5 +1,7 @@
-module TerminalJS
-  
+require "#{File.dirname(__FILE__)}/../ace/base"
+
+module TerminalJS 
+
   module Base
     DEFAULT_COLOR ="#3d31a2"
     DEFAULT_TEXT_COLOR = "#7c70da"
@@ -17,15 +19,15 @@ module TerminalJS
         :help => "show terminal id"
       },
       :stop => {
-        :exec => "gac.clear (err, js) -> if not err then this.type('# Gibberish.js stopped', '#0FA')",
+        :exec => AceHelper::Base::BASE_CLEAR,
         :help => "stop coffeed gibberish.js audio machine!"
       },
       :run => {
-        :exec =>"gac.run (err, js) -> if not err then this.type('# Running gibberish.js', '#F00')",
+        :exec => AceHelper::Base::BASE_RUN,
         :help => "run coffeed gibberish.js audio machine!"
       },
       :offset => {
-        "\n    " => [:clear, :exit, :id, :stop, :run, :ace]
+        "\n    " => [:clear, :exit, :id, :stop, :run]
       }
     }
 

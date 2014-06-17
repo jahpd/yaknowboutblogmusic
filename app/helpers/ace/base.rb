@@ -21,9 +21,9 @@ module AceHelper
     
     protected
 
-    BASE_RUN =  " gac.run (err, js) -> window.terminal.type('# Running gibberish.js', '#0FA')\n"
-    BASE_CLEAR = "gac.clean (err, js) -> window.terminal.type('# Cleaning gibberish.js', '#0FA')\n"
-    BASE_TERMINAL = "Terminal.setFocus true; window.terminal.type('# Exiting Ace editor', '#0FA')\n"
+    BASE_RUN =  "gac.run (err, data) -> window.terminal.type(command+'\n') for command in [''+eval(data)+'']"
+
+    BASE_CLEAR = "gac.clean (cleaned) -> if cleaned then window.terminal.type('# Audio cleaned')\n"
 
     RENDER_OPTIONS = {
       :lang => MODE,                       # The running-language of web-application
@@ -36,10 +36,6 @@ module AceHelper
         :stop => {
           :bindKeys => "win: 'Ctrl-.', linux: 'Ctrl-.', mac: 'Command-.'",
           :exec => "(e) -> #{BASE_CLEAR}"
-        },
-        :switch_2_terminal => {
-          :bindKeys => "win: 'Ctrl-T', linux: 'Ctrl-T', mac: 'Command-/'",
-          :exec => "(e) -> #{BASE_TERMINAL}"
         }
       }
     }

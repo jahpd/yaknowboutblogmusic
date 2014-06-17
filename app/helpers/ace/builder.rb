@@ -17,15 +17,11 @@ module AceHelper
       content_tag(:div, "", :id => "coffee_editor")
     end
 
-    def hook_gibberails
-      "#{active_script(:RAILS)}\nconsole.log 'audio library loaded!'\n"
-    end
-
     def build_script(code_string)
       string = hook_gac()
       string << hook_editor(MODE, THEME)
-      string << hook_ace_commands(RENDER_OPTIONS[:commands], "\n  ")
       string << hook_code(code_string)
+      #string << hook_ace_commands(RENDER_OPTIONS[:commands], "\n  ")
       
       javascript_tag CoffeeScript.compile(string, :bare => true), {:id => "generated_script"}
     end
