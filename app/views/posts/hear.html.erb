@@ -1,13 +1,17 @@
 <nav id="app">
-  <div id="editor_wrapper">
-    <%= yaknow_include_tags %>
-    <%= create_ace_wrapper %>
-    <%= build_script decompress_for(@code) %>
-  </div>
-
-  <div id="terminal_wrapper">
-    <%= terminal_include_tag() %>
-    <%= terminal_build({:id => "coffee-sound", :rows => 34})%>
-  </div>
+  <%= coffeesound_js_tags %>
+  
+  <%= create_ace decompress_for(@code), :id => "coffee_editor" %>
+  
+  <%= create_terminal :rows=> 30, :id=> "termDiv", :editor => "coffee_editor", :custom_commands => {
+    :run => {
+      :help => "runs code embeeded on ace editor",
+      :exec => "gac.run (err, js) -> if not err then terminal.type eval(js) else terminal.type js"
+    },
+    :clean => {
+      :help => "clean audio",
+      :exec => "gac.clean (cleared) -> terminal.type cleared" 
+    }
+  } %>
 </nav>
 

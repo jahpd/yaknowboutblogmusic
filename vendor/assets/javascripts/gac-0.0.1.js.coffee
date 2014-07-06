@@ -8,7 +8,7 @@
 #
 #     func = (args..., callback) -> # code
 # 
-gac = 
+window.gac = 
   # wow... auto-answered ;)
   initialized: false
 
@@ -44,22 +44,22 @@ gac =
   # maybe $.ajax or socket.io
   execute: (compile, data, callback) ->
     try
-      # Unsecure mode: running CoffeeScript client
+      # FIX Unsecure mode: running CoffeeScript client
+      # TODO Try socket.io instead
       js = unescape(data)
       js = compile js, bare:true, map:{}
       js = unescape js
-      if callback then callback !js, js
-      # TODO Run ajax requesting, compiling on server
-      # and return the js code
+      callback !js, js
     catch e
-      callback true, "#{compile.prototype.name}:\n#{js.map}#{e}"
+      callback true, "#{compile.prototype.name}:\n#{js.map}\n#{e}"
 
-  # Runs the code   
-  run: (callback)->
-    console.log 'Operating compilation...'
-    gac.execute CoffeeScript.compile, window.editor.getValue(), (err, js) -> if callback then callback(err, js) else eval(err, eval(js))
+  # Runs the code
+  # example
+  #
+  #     gac.run (err, js) -> #Do something awesome  
+  run: (callback)-> gac.execute CoffeeScript.compile, window.editor.getValue(), callback
 
-  # this is helper code to check arguments in user code
+  # this is helper code to check arguments in audio user code
   checkfloats: (k, v)->
     b = false
     for t in ['freq', 'amp', 'pulsewidth', 'chance', 'pitchMin', 'pitchMax', 'pitchChance', 'cutoff', 'Q', 'roomSize', 'dry', 'wet']
@@ -68,7 +68,7 @@ gac =
         break
     b
 
-  # this is helper code to check arguments in user code
+  # this is helper code to check arguments in audio user code
   checkints: (k, v)->
     b = false
     for t in ['mode', 'rate', 'amount']
@@ -87,7 +87,20 @@ window.INIT = (time, callback) ->
   setTimeout ->
     gac.clean (cleaned) ->
       gac.init (initialized)->
-        callback cleaned and initialized
+        callback()
+  , time
+
+# Uma simples tarefa a ser executada apos
+# um certo tempo; util para estruturar
+# secoes de uma musica
+#
+#   INIT 100, -> 
+#     TASK 200, -> GEN_SEQ...
+#     TASK 800, -> GEN_SEQ...
+# 
+window.TASK = (time, callback) ->
+  setTimeout ->
+    callback()
   , time
 
 # Um gerador de audio
@@ -128,9 +141,6 @@ window.GEN_RAND = (n, o, c) ->
 # objeto (Hash) com as propriedades necessárias para a Unidade geradora de audio; se você
 # não quiser, deixe como quiser
 # 
-#    freq = Gibberish.rndf(440, 445)
-#    amp = 1/o.freq 
-#    sinG = new Gibberish.Sine(freq, amp)
 #    sin = GEN_FN "Sine", freq: -> Gibberish.rndf(440, 445), amp: (freq)-> 1/freq
 #    sinG.connect()  
 #    sin.connect()

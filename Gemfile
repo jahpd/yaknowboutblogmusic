@@ -27,3 +27,6 @@ gem 'rubypython'
 gem 'ruby-lzma'
 gem "bootstrap_flash_messages", "~> 1.0.0"
 gem "cinch"
+#gem "socket.io-rails"
+gem 'ace-helper'
+gem 'termlib-helper'

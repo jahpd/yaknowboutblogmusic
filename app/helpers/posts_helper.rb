@@ -1,12 +1,28 @@
-require "#{File.dirname(__FILE__)}/coffee_syntax"
-require "#{File.dirname(__FILE__)}/ace/builder"
-require "#{File.dirname(__FILE__)}/terminal/builder"
+dir = File.dirname(__FILE__)
+require "#{dir}/coffee_syntax"
 require 'lzma'
+require 'ace/helper'
+#require 'termlib/helper'
 
 module PostsHelper
 
-  include AceHelper::Builder
-  include TerminalJS::Builder
+  include Ace::Helper::Builder
+  include Termlib::Helper::Builder
+  
+  # A simple <div/> to wrap editor
+  # to Ace
+  def create_ace(src, opt)
+    js = ace(src)
+    content_tag(:div, js, :id => opt[:id])
+  end
+
+  
+  # Creates <div/> to wrap
+  # termlib.js
+  def create_terminal(opt)
+    js = termlib(opt)
+    content_tag(:div, js, :id => opt[:id])
+  end
 
   # Renders entire post to markdown in .erb views. 
   # It already highlight a custom mrkdown for codes
@@ -47,7 +63,7 @@ module PostsHelper
 
       # Now the code text needs to be encoded in Hex with LZMA
       lzma  = compress_for code.text
-      a[:href] = "/posts/#{post.id}/hear?q=#{i}&c=#{lzma}"
+      a[:href] = "/posts/#{post.id}/hear?c=#{lzma}"
       hear.push a
     end
     
@@ -73,6 +89,24 @@ module PostsHelper
     hex = [compressed_string].pack("H*")
     string = LZMA.decompress hex
     string
+  end
+
+  # Include all necessary scripts
+  # You can choice your ace theme:
+  #
+  # - Default: 
+  #
+  #     <%= coffeesound_js_tags :theme => :monokai %> 
+  #     same as
+  #     <%= coffeesound_js_tags %>
+  #
+  # - Custom:
+  #   - First include a necessary theme-#{theme}.js file in
+  #   /vendor/assets/javascripts
+  #
+  #     <%= coffeesound_js_tags :theme => :emacs%>
+  def coffeesound_js_tags(opt={:theme => :monokai})
+     javascript_include_tag("gibberish_2.0.js", "coffee-script", "termlib", "ace", "mode-coffee", "worker-coffee", "theme-#{opt[:theme]}", "gac-0.0.1")
   end
 
   private

@@ -80,31 +80,21 @@
 .highlight .gd { color: #f92672; } /* Generic.Deleted & Diff Deleted */
 .highlight .gi { color: #a6e22e; } /* Generic.Inserted & Diff Inserted */
 
-#term-wrap{
+#coffee_editor{
+  position:absolute; 
+  top:9.6%;
+  right: 39%;
+  bottom: 9.8%;
+  left: 0.7%;
+  border:solid grey 4.75px;
+  border-radius:1.05%;
+}
+
+#termDiv{
+  float: right;
+  margin-top: 14px;
   border: solid grey 4.75px;
   -webkit-border-radius: 1.75%;
   -moz-border-radius: 1.75%;
   border-radius: 1.75%;
-}
-
-#editor_wrapper {
-  float: left;
-}
-
-#terminal_wrapper {
-  margin-top: 1.6%;
-  margin-right: 0%;
-  float: right;
-}
-
-#coffee_editor {
-  position: absolute;
-  top: 9.6%;
-  right: 35%;
-  bottom: 9.1%;
-  left: 0.7%;
-  border: solid grey 4.75px;
-  -webkit-border-radius: 1.05%;
-  -moz-border-radius: 1.05%;
-  border-radius: 1.05%;
 }
