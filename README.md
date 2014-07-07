@@ -29,6 +29,17 @@ I will update for Windows installation latter.
    $ bundle install
 ```
 
+### Migration and seed database
+
+In first running, database (SQLite 3.0) must be seed first, to include some posts
+examples:
+
+```
+  $ rake --tasks
+  $ rake db:migrate
+  $ rake db:seed
+```
+  
 ## Running
 
 ```
@@ -44,11 +55,10 @@ If you want to start in another port:
 
 # Diagnostics
 
-
-This application was built with recipes that are NOT known to work together.
-
-This application was built with preferences that are NOT known to work
-together.
+Acessing a webpage like
+[this](http://localhost:3000/posts/1/hear?c=5d000080001f00000000000000000508f7f014ae2e34fad792f976127ce795bd535d17482c64acba78844ca0082ba0)
+for first time, both ace and termlib fails in load contents. If you
+refresh page (Ctrl+R or F5), ace and termlib works properly.
 
 If the application doesn’t work as expected, please [report an issue](https://github.com/RailsApps/rails_apps_composer/issues)
 and include these diagnostics:
@@ -67,7 +77,6 @@ Recipes:
 * gems
 * git
 * init
-
 * learn_rails
 * models
 * prelaunch
