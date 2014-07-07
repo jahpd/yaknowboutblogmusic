@@ -12,10 +12,14 @@ window.gac =
   # wow... auto-answered ;)
   initialized: false
 
+  log: (msgs...) ->
+    terminal.newLine()
+    terminal.write msgs
+    
   # cleans if  gac.initialized is true
   # used with init method
   clean: (callback) ->
-    console.log 'Operating cleaning...'
+    gac.log "#{Date.now()}: Cleaning"
     if gac.initialized
       Gibberish.clear()
       gac.initialized = false
@@ -30,7 +34,7 @@ window.gac =
   # 
   # - Gibberish.Binops.export()
   init: (callback) ->
-    console.log 'initializing Gibberish Audio Client'
+    gac.log "#{Date.now()}: Initializing Gibberish"
     try 
       Gibberish.init()
       Gibberish.Time.export()
@@ -43,6 +47,7 @@ window.gac =
   # Execute; this method needs a more secure aproach;
   # maybe $.ajax or socket.io
   execute: (compile, data, callback) ->
+    gac.log "#{Date.now()}: Compiling"
     try
       # FIX Unsecure mode: running CoffeeScript client
       # TODO Try socket.io instead
@@ -68,6 +73,14 @@ window.gac =
         break
     b
 
+  checkUGEN: (ugen) ->
+    b = false
+    for t in ["sine", "sine2", "saw", "saw2", "triangle", "triangle2", "pwm", "SVF", "reverb"]
+      if typeof(ugen) is 'object' and ugen.name == t
+        b = true
+        break
+    b
+      
   # this is helper code to check arguments in audio user code
   checkints: (k, v)->
     b = false
@@ -83,26 +96,45 @@ window.gac =
   
 # Após inicializar, limpe, re-inicie o servidor de audio e execute a função
 # dada pelo usuario depois de um tempo determinado
-window.INIT = (time, callback) -> 
-  setTimeout ->
-    gac.clean (cleaned) ->
-      gac.init (initialized)->
-        callback()
-  , time
-
+window.INIT = (time, callback) ->
+  try 
+    setTimeout ->
+      gac.clean (cleaned) ->
+        gac.init (initialized)->
+          callback()
+    , time
+  catch e
+    gac.log "!ERROR", "#{Date.now}: #{e}"
+    
 # Uma simples tarefa a ser executada apos
-# um certo tempo; util para estruturar
-# secoes de uma musica
+# um certo tempo, durante um certo tempo;
+# util para estruturar secoes de uma musica
 #
 #   INIT 100, -> 
-#     TASK 200, -> GEN_SEQ...
-#     TASK 800, -> GEN_SEQ...
-# 
-window.TASK = (time, callback) ->
-  setTimeout ->
-    callback()
-  , time
-
+#     TASK 200, 1000, ->
+#        GEN "Sine", amp: 0.71, freq: 440 
+#     TASK 800, 1000, ->
+#        GEN "Sine", amp: 0.35, freq: 880 
+window.TASK = (time, dur,  callback) ->
+  try
+    setTimeout ->
+      gac.log "#{Date.now()}: PLAY"
+      ugen = callback()
+      setTimeout ->
+        gac.log "#{Date.now()}: STOP"
+        if gac.checkUGEN ugen
+          ugen.disconnect()
+        else
+          ugen.stop()
+      , dur
+      if gac.checkUGEN ugen
+        ugen.connect()
+      else
+        ugen.start()
+    , time
+  catch e
+    gac.log "#{Date.now()}: #{e}"
+    
 # Um gerador de audio
 # 
 #    sinG = new Gibberish.Sine(445, 0.71)
@@ -111,12 +143,13 @@ window.TASK = (time, callback) ->
 #    sin.connect()
 window.GEN = (n, o, c) ->
   try
+    gac.log n
+    gac.log "  #{k}: #{v}" for k, v of o
     u = new Gibberish[n]
-    console.log "#{u} #{n}:"
-    (console.log "  #{k}:#{v}" ; u[k] = v) for k, v of o
+    u[k] = v for k, v in o
     if c then c u else u
   catch e
-    alert e
+    gac.log "!ERROR", "#{Date.now()}: #{e}"
 
 # Um gerador de audio, mas com valores randomicos; é interessante notar que
 # se você quiser um número randômico, forneça um Array de dois valores; se você
@@ -126,7 +159,7 @@ window.GEN = (n, o, c) ->
 #    sin = GEN_RANDOM "Sine", amp: 0.71, freq: [440, 445] # similar ao anterior
 #    sinG.connect()  
 #    sin.connect()
-window.GEN_RAND = (n, o, c) ->
+window.RAND = (n, o, c) ->
   for k, v of o
     if gac.checkfloats(k, v)
       o[k] = Gibberish.rndf v[0], v[v.length-1] 
@@ -144,7 +177,7 @@ window.GEN_RAND = (n, o, c) ->
 #    sin = GEN_FN "Sine", freq: -> Gibberish.rndf(440, 445), amp: (freq)-> 1/freq
 #    sinG.connect()  
 #    sin.connect()
-window.GEN_FN = (n, o, c) ->
+window.FN = (n, o, c) ->
   for k, v of o
     if (typeof(v) is 'Function') 
       o[k] = v()
@@ -169,8 +202,9 @@ window.GEN_FN = (n, o, c) ->
 #          a = []
 #          a[i] = Math.pow(2, i+8) for i in [0..7]
 #          a[Gibberish.rndi(0, a.length-1)]/16384 for i in [0..13]
-window.GEN_SEQ = (o, c) ->
-  o.keysAndValues[k] = v() for k, v of o.keysAndValues 
+window.SEQ = (o, c) ->
+  o.keysAndValues[k] = v() for k, v of o.keysAndValues
   o.durations = o.durations()
   u = new Gibberish.Sequencer(o)
+  gac.log "#{Date.now()}: #{o.keysAndValues}", "#{Date.now()}: #{o.durations}"
   if c then c u else u

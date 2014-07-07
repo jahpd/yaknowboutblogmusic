@@ -3,7 +3,7 @@
   
   <%= create_ace decompress_for(@code), :id => "coffee_editor" %>
   
-  <%= create_terminal :rows=> 30, :id=> "termDiv", :editor => "coffee_editor", :custom_commands => {
+  <%= create_terminal :rows=> 33, :id=> "termDiv", :editor => "coffee_editor", :custom_commands => {
     :run => {
       :help => "runs code embeeded on ace editor",
       :exec => "gac.run (err, js) -> if not err then terminal.type eval(js) else terminal.type js"

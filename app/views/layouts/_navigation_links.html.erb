@@ -1,12 +1,12 @@
 <% if user_signed_in? %>
   <% if @code %>
-    <li id="render" role="button" class="btn-success"><a  method="post" action="hear">Render</button></a></li>
-    <li id="stop" role="button" class="btn-danger"><a method="post" action="hear" >Stop</button></a></li>
+    <li id="render" role="button" class="btn-default"><a  method="post" action="hear">Render</button></a></li>
+    <li id="stop" role="button" class="btn-warning"><a method="post" action="hear" >Stop</button></a></li>
+    <li id="record" role="button" class="btn-danger"><a method="post" action="hear" >Record</button></a></li>
   <% else %>
     <li><%= link_to 'Edit account', edit_user_registration_path %></li>
-    <li><%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %></li>
     <li><%= link_to 'My music posts', posts_path %></li>
-    <li><%= link_to "About", "/" %></li>
+    <li><%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %></li>
   <% end %>
 <% else %>
   <li type="button" class="active"><%= link_to "About", "/" %></li>
