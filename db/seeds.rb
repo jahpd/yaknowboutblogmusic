@@ -8,5 +8,44 @@
 user = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << user.email
 
-post = Post.create(id: 1, author: user.name, title:"Hello World", doc:"#This is a seeded post, why?\n\na simple markdown code to embeed database\n\n```\n\tconsole.log \'hello world!\'\n```")
-puts "CREATED POST: " << post.title
+[
+{id: 0, author: user.name, title:"Hello World I", doc: """#Hello World!
+
+this is a default post write with [Markdown](). If you want learn all, see the link;
+some notes about coding.
+
+In future I will add some more notes
+""" },
+{id: 1, author: user.name, title:"Hello World II", doc:"#This is a seeded post, why?\n\na simple markdown code to embeed database\n\n```\n\terminal.type \'hello world!\'\n```"},
+{id: 2, author: user.name, title:"Some DSP basics I", doc:"""Lets start use gac (Gibberish Audio Client); it's a simplification from Gibberish (well, its like, but with some helpers that build musical structures); think as - if possible - as a musical grammar.
+
+Here you can control DSP's, initialization time after 100ms, then start a DSP task after another 100ms:
+
+    INIT 0, -> GEN \"Sine\", amp: 0.71, freq: 440
+
+"""},
+{id: 3, author: user.name, title:"Some DSP basics II", doc:"""You can use audio callbacks to create your own post-processing:
+
+    INIT 0, ->
+        TASK 100, 1000, ->
+            GEN \"Sine\", amp: 0.71, freq: 440, (sine) -> 
+                #=> do some post-processing
+
+Or use variable assignement:
+
+    INIT 0, ->
+        TASK 100, 1000, ->
+            sine = GEN \"Sine\", amp: 0.71, freq: 440
+            #=> do something awesome
+
+You can add more tasks:
+
+    INIT 0, ->
+        TASK 0, 1000 -> GEN \"Sine\", amp: 0.71, freq: 440
+        TASK 800, 2000, -> GEN \"Sine\", amp: 0.35, freq: 880
+
+""" }
+].each{|e|
+  post = Post.create(e)
+  puts "CREATED POST: " << post.title
+}
