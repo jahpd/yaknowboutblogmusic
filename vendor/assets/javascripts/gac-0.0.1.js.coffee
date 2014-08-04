@@ -13,8 +13,8 @@ window.gac =
   initialized: false
 
   log: (msgs...) ->
-    terminal.newLine()
-    terminal.write msgs
+    if window.terminal then terminal.newLine()
+    if window.terminal then terminal.write msgs
     
   # cleans if  gac.initialized is true
   # used with init method
@@ -40,9 +40,9 @@ window.gac =
       Gibberish.Time.export()
       Gibberish.Binops.export()
       gac.initialized = true
-      if callback then callback gac.initialized
+      if callback then callback()
     catch e
-      callback e
+      if callback then callback e else gac.log e
 
   # Execute; this method needs a more secure aproach;
   # maybe $.ajax or socket.io
@@ -97,12 +97,17 @@ window.gac =
 # Após inicializar, limpe, re-inicie o servidor de audio e execute a função
 # dada pelo usuario depois de um tempo determinado
 window.INIT = (time, callback) ->
-  try 
-    setTimeout ->
-      gac.clean (cleaned) ->
-        gac.init (initialized)->
-          callback()
-    , time
+  try
+    gac.clean (cleaned) ->
+      if cleaned
+        setTimeout ->
+          gac.init (error)->
+            if error
+              gac.log error.message
+              gac.log error.stack
+            else
+              callback()
+        , time
   catch e
     gac.log "!ERROR", "#{Date.now}: #{e}"
     
@@ -123,7 +128,7 @@ window.TASK = (time, dur,  callback) ->
       setTimeout ->
         gac.log "#{Date.now()}: STOP"
         if gac.checkUGEN ugen
-          ugen.disconnect()
+          gac.clean()
         else
           ugen.stop()
       , dur
@@ -208,3 +213,47 @@ window.SEQ = (o, c) ->
   u = new Gibberish.Sequencer(o)
   gac.log "#{Date.now()}: #{o.keysAndValues}", "#{Date.now()}: #{o.durations}"
   if c then c u else u
+
+# Some Patch
+window[e] = Gibberish.Binops[e] for e in ["Add","Div", "Map", "Merge", "Mod", "Mul", "Pow", "Sqrt", "Sub"]
+
+### following http://24ways.org/2005/dont-be-eval/ ###
+window.eval_cs = ->
+  $(document).ready ->
+    gac.log "requesting server..."
+    try
+      url = document.URL.replace('hear', 'compress')
+      url = url.split("?c=")[0]
+      gac.log "compressing code..."
+      window.LZMA.compress editor.getValue(), 1, (result) ->
+        url += "?c=#{result}"
+        $.getJSON url, (data) ->
+          gac.log "compressed at #{data['compressed_at']}"
+          url = url.replace('compress', 'compile')
+          url = url.split("?c=")
+          url += "?c="+data['lzma']
+          $.getJSON url, (data) ->
+            gac.log "verified at #{data['compiled_at']}"
+            eval data['fn']
+      , (percent) ->
+        s = ['<','^','>','v']
+        if window.terminal
+          Terminal.newLine()
+          Terminal.typeAt  "#{s[Math.floor(Math.Random()*4)]}"
+    catch e
+      gac.log "Error: #{e}\n See javascript console for more"
+      console.log "#{e.stack}"
+            
+    
+    
+            
+  ###
+  $.ajax(
+    url: url
+    dataType: 'jsonp'
+    crossDomain: true
+    success: (data) ->
+      gac.log "OK"
+  ).done (data) ->
+    
+  ###

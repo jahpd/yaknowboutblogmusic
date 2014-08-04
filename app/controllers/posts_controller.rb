@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+
+  include PostsHelper
+
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, only:[:show, :new, :edit, :update, :destroy]
   before_filter :all_posts_from_current_user, only: [:index]
@@ -23,6 +26,28 @@ class PostsController < ApplicationController
   end
 
   def hear
+    @code = params[:c]
+  end
+
+  def compress
+    @code = 
+    json = {:compressed_at => Time.now, :lzma => compress_for(params[:c]) }.to_json
+    respond_to do |format|
+      format.js {render :json => json}
+      format.json render :json => json, :callback => params['callback']
+    end
+  end
+
+  def parse
+    string = decompress_for params[:c]
+    json = {:compiled_at => Time.now, :fn => CoffeeScript.compile(string, :bare=>true) }.to_json
+    respond_to do |format|
+      format.js {render :json => json}
+      format.json render :json => json, :callback => params['callback']
+    end
+  end
+
+  def parsedCode
     @code = params[:c]
   end
 

@@ -154,7 +154,7 @@ to help coders.
 
  - [gibberish.js](https://github.com/charlieroberts/Gibberish) (the audio library used)
  - [gibberish live coding environment](http://gibber.mat.ucsb.edu/)
- - [vivace environment](http://void.cc/freakcoding/)
+ - [vivace live coding environment](http://void.cc/freakcoding/)
  - [coffee-collider](https://github.com/mohayonao/CoffeeCollider)
 
 I suggest you read this [paper](http://www.mat.ucsb.edu/Publications/WebBrowser-as-Synth-Interface.pdf)
