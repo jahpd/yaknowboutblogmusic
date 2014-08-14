@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :posts do
     get "hear"
-    get "parse"
+    get "compile"
     get "compress"
   end
   root :to => "visitors#index"

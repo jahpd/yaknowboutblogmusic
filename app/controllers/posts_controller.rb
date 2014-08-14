@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, only:[:show, :new, :edit, :update, :destroy]
   before_filter :all_posts_from_current_user, only: [:index]
+  before_filter :set_json_compile, only: [:compile]
 
   # GET /posts
   # GET /posts.json
@@ -29,27 +30,15 @@ class PostsController < ApplicationController
     @code = params[:c]
   end
 
-  def compress
-    @code = 
-    json = {:compressed_at => Time.now, :lzma => compress_for(params[:c]) }.to_json
+  # GET /posts/1/compile
+  # for ajax response
+  def compile
     respond_to do |format|
-      format.js {render :json => json}
-      format.json render :json => json, :callback => params['callback']
+      #format.js {render :json => @json}
+      format.json {render(:json => @json, :callback => params['callback'])}
     end
   end
 
-  def parse
-    string = decompress_for params[:c]
-    json = {:compiled_at => Time.now, :fn => CoffeeScript.compile(string, :bare=>true) }.to_json
-    respond_to do |format|
-      format.js {render :json => json}
-      format.json render :json => json, :callback => params['callback']
-    end
-  end
-
-  def parsedCode
-    @code = params[:c]
-  end
 
   # POST /posts
   # POST /posts.json
@@ -105,5 +94,17 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:post).permit(:title, :doc)
+    end
+
+    def set_json_compile
+      code = decompress_for params[:c]
+      set_json({:callback => CoffeeScript.compile(code, {:bare => true}), :type =>"text/javascript"})
+    end
+      
+    def set_json(opt)
+      @json = Hash.new
+      opt.each_pair{|k, v| @json[k] = v}
+      @json[:done] = Time.now
+      @json.to_json
     end
 end

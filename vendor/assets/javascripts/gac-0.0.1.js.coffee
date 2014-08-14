@@ -44,25 +44,29 @@ window.gac =
     catch e
       if callback then callback e else gac.log e
 
-  # Execute; this method needs a more secure aproach;
-  # maybe $.ajax or socket.io
-  execute: (compile, data, callback) ->
-    gac.log "#{Date.now()}: Compiling"
-    try
-      # FIX Unsecure mode: running CoffeeScript client
-      # TODO Try socket.io instead
-      js = unescape(data)
-      js = compile js, bare:true, map:{}
-      js = unescape js
-      callback !js, js
-    catch e
-      callback true, "#{compile.prototype.name}:\n#{js.map}\n#{e}"
 
-  # Runs the code
-  # example
-  #
-  #     gac.run (err, js) -> #Do something awesome  
-  run: (callback)-> gac.execute CoffeeScript.compile, window.editor.getValue(), callback
+            # run;
+  # Request server for jsonp response
+  run: (data, callback) ->
+    $(document).ready ->
+      gac.log "#{Date.now()}: Compiling"
+      try
+        ### following http://24ways.org/2005/dont-be-eval/ ###
+        gac.log "requesting server..."
+        url = document.URL.replace('hear', 'compile')
+        url = url.split("?c=")[0]
+        gac.log "Compressing code ..."
+        LZMA.compress data,1, (result) ->
+          compressed = ""
+          compressed += s for s in window.convert_to_formated_hex(result).split(" ")
+          url += "?c=#{compressed}"
+          $.getJSON url, (json) ->
+            gac.log "Compiled at #{json['done']}"
+            gac.log "Executing ..."
+            callback !json['callback'], json['callback']
+      catch e
+        gac.log "Error: #{e}\n See javascript web console for more"
+        console.log "#{e.stack}"
 
   # this is helper code to check arguments in audio user code
   checkfloats: (k, v)->
@@ -214,46 +218,7 @@ window.SEQ = (o, c) ->
   gac.log "#{Date.now()}: #{o.keysAndValues}", "#{Date.now()}: #{o.durations}"
   if c then c u else u
 
-# Some Patch
+# Um Patch
+# para usar o Gibberish.Binops como built-ins
 window[e] = Gibberish.Binops[e] for e in ["Add","Div", "Map", "Merge", "Mod", "Mul", "Pow", "Sqrt", "Sub"]
 
-### following http://24ways.org/2005/dont-be-eval/ ###
-window.eval_cs = ->
-  $(document).ready ->
-    gac.log "requesting server..."
-    try
-      url = document.URL.replace('hear', 'compress')
-      url = url.split("?c=")[0]
-      gac.log "compressing code..."
-      window.LZMA.compress editor.getValue(), 1, (result) ->
-        url += "?c=#{result}"
-        $.getJSON url, (data) ->
-          gac.log "compressed at #{data['compressed_at']}"
-          url = url.replace('compress', 'compile')
-          url = url.split("?c=")
-          url += "?c="+data['lzma']
-          $.getJSON url, (data) ->
-            gac.log "verified at #{data['compiled_at']}"
-            eval data['fn']
-      , (percent) ->
-        s = ['<','^','>','v']
-        if window.terminal
-          Terminal.newLine()
-          Terminal.typeAt  "#{s[Math.floor(Math.Random()*4)]}"
-    catch e
-      gac.log "Error: #{e}\n See javascript console for more"
-      console.log "#{e.stack}"
-            
-    
-    
-            
-  ###
-  $.ajax(
-    url: url
-    dataType: 'jsonp'
-    crossDomain: true
-    success: (data) ->
-      gac.log "OK"
-  ).done (data) ->
-    
-  ###
