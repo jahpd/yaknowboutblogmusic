@@ -16,13 +16,22 @@
  provides GitHub Flavored Markdown CSS from gem 'github-css-rails':
  */
 
+html {
+ 
+}
+
 .main {
+  background-image: url("http://www.cappel-nord.de/b/wp-content/uploads/2012/02/benoit_and_the_mandelbrots_fullres_2010-1024x428.jpg");
+  -webkit-background-size: 1024x428;
+  -moz-background-size: 1024x428;
+  -o-background-size: 1024x428;
+  background-size: 1024x428;
   div{
     h1, h2, h3, h4, h5, h6, p {color: green;}
     a  {color: #A1A100;}
   }
   .panel-group{
-      padding: 0% 25% 0% 25%;
+      padding: 15% 25% 0% 25%;
   }
 }
 
