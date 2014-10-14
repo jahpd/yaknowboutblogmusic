@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
-gem 'rails', '4.1.1'
+ruby '2.1.2'
+gem 'rails', '4.1.0'
 gem 'sqlite3'
-gem 'sass-rails', '~> 4.0.3'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0',          group: :doc
+gem 'jbuilder'
+gem 'sdoc',          group: :doc
 gem 'spring',        group: :development
 gem 'bootstrap-sass'
 gem 'devise'
@@ -25,7 +25,7 @@ gem 'pygments.rb'
 gem 'nokogiri'
 gem 'rubypython'
 gem 'ruby-lzma'
-gem "bootstrap_flash_messages", "~> 1.0.0"
+gem "bootstrap_flash_messages"
 gem "cinch"
 #gem "socket.io-rails"
 gem 'ace-helper'

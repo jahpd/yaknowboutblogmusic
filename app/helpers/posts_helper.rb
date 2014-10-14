@@ -115,7 +115,7 @@ module PostsHelper
   #
   #     <%= coffeesound_js_tags :theme => :emacs%>
   def coffeesound_js_tags(opt={:theme => :monokai})
-     javascript_include_tag("gibberish_2.0.js", "termlib", "ace", "mode-coffee", "worker-coffee", "theme-#{opt[:theme]}", "gac-0.0.1", "lzma_worker", "lzma2string")
+     javascript_include_tag("gibber.lib.min", "termlib", "ace", "mode-coffee", "worker-coffee", "theme-#{opt[:theme]}", "lzma_worker", "lzma2string")
   end
 
   private

@@ -6,4 +6,10 @@ class RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.for(:account_update) {|u| u.permit(:name, :email, :password, :password_confirmation, :current_password)}
   end
 
+  # https://stackoverflow.com/questions/4140378/how-can-i-send-a-welcome-email-to-newly-registered-users-in-rails-using-devise
+  def create
+    super
+    UserMailer.welcome(@user).deliver unless @user.invalid?
+  end
+
 end

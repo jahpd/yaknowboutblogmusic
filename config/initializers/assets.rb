@@ -1,4 +1,4 @@
-Rails.application.config.assets.precompile += %w( gibberish_2.0.js )
+Rails.application.config.assets.precompile += %w( gibber.lib.min.js )
 Rails.application.config.assets.precompile += %w( coffee-script.js )
 Rails.application.config.assets.precompile += %w( ace.js )
 Rails.application.config.assets.precompile += %w( mode-coffee.js )
