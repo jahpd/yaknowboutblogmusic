@@ -135,7 +135,7 @@ class PostsController < ApplicationController
     def set_json_stop
       string_try = """window.update = ->
   try
-    Gibber.clear()
+    Gibber.clear();
     terminal.type \"Stopped at \#{json['compiled']['at']}\"
     terminal.newLine()
     terminal.prompt()
