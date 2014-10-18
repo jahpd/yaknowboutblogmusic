@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    ace-helper (0.0.1)
+    ace-helper (0.0.2)
     actionmailer (4.1.0)
       actionpack (= 4.1.0)
       actionview (= 4.1.0)
@@ -41,7 +41,6 @@ GEM
       sass (~> 3.2)
     bootstrap_flash_messages (1.0.0)
     builder (3.2.2)
-    cinch (2.1.0)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -217,12 +216,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ace-helper
+  ace-helper (= 0.0.2)
   better_errors
   binding_of_caller
   bootstrap-sass
   bootstrap_flash_messages
-  cinch
   coffee-rails
   devise
   jbuilder

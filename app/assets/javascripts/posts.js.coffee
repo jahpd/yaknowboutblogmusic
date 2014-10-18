@@ -4,6 +4,7 @@
 # SOCKET.IO
 
 # this is helper code to check arguments in audio user code
+
 checkfloats= (k, v)->
     b = false
     for t in ['freq', 'amp', 'pulsewidth', 'chance', 'pitchMin', 'pitchMax', 'pitchChance', 'cutoff', 'Q', 'roomSize', 'dry', 'wet']
@@ -29,68 +30,32 @@ checkints = (k, v)->
         break
     b
 
-window.run = (data, callback) ->
-  $(document).ready ->
-      terminal.type "#{Date.now()}: Compiling"
-      terminal.newLine()
-      try
-        ### following http://24ways.org/2005/dont-be-eval/ ###
-        terminal.type "requesting server..."
-        terminal.newLine()
-        url = document.URL.replace('hear', 'compile')
-        url = url.split("?c=")[0]
-        terminal.type "Compressing code ..."
-        terminal.newLine()
-        LZMA.compress data,1, (result) ->
-          compressed = ""
-          compressed += s for s in window.convert_to_formated_hex(result).split(" ")
-          url += "?c=#{compressed}"
-          $.getJSON url, (json) ->
-            terminal.type "Compiled at #{json['done']}"
-            terminal.newLine();
-            terminal.type "Executing ..."
-            Gibber.init()
-            callback !json['callback'], json['callback']
-            terminal.newLine()
-            terminal.prompt()
+execute = (url)->
+  $.getJSON url, (json) ->
+    (new Function json['callback'])()
+    window.update()
+
+compress = (data, fn) ->
+  url = changecurrenturl 'hear', 'compile'
+  LZMA.compress data, 1, (result) ->
+    compressed = ""
+    compressed += s for s in window.convert_to_formated_hex(result).split(" ")
+    url += "?c=#{compressed}"
+    fn url
+    
+changecurrenturl = (a, b) ->
+  terminal.type "requesting server..."
+  terminal.newLine()
+  url = document.URL.replace(a, b)
+  url.split("?c=")[0]
+
+window.update = null
+
+window.stop = -> execute changecurrenturl 'hear', 'stop'
+  
+window.run = (data) -> compress data, (url) -> execute url
             
-      catch e
-        terminal.type "#{e.stack}"
-        terminal.newLine()
-        terminal.prompt()
-
-window.exec = null
-        
-window.stop = (callback) ->
-  $(document).ready ->
-      terminal.type "#{Date.now()}: Cleaning"
-      terminal.newLine()
-      try
-        ### following http://24ways.org/2005/dont-be-eval/ ###
-        terminal.type "requesting server..."
-        terminal.newLine()
-        url = document.URL.replace('hear', 'compile')
-        url = url.split("?c=")[0]
-        terminal.type "Stopping code ..."
-        terminal.newLine()
-        LZMA.compress "Gibber.clear(); null", 1, (result) ->
-          compressed = ""
-          compressed += s for s in window.convert_to_formated_hex(result).split(" ")
-          url += "?c=#{compressed}"
-          $.getJSON url, (json) ->
-            callback !json['callback'], json['callback']
-            terminal.type "Stopped at #{json['done']}"
-            terminal.newLine()
-            terminal.prompt()
-            
-      catch e
-        terminal.type "#{e.stack}"
-        terminal.newLine()
-        terminal.prompt()
-
-window.rndf = Gibber.Audio.Core.Rndf()
-window.rndi = Gibber.Audio.Core.Rndi()
-
+          
 window.RAND = (name, o, callback) ->
   for k, v of o
     if checkfloats(k, v)
@@ -99,6 +64,5 @@ window.RAND = (name, o, callback) ->
       o[k] = rndi v[0], v[v.length-1]
     else
       o[k] = v
-  ugen = Gibber.Audio.Oscillators[name] o
-  if callback then callback ugen else ugen
-
+    ugen = Gibber.Audio.Oscillators[name] o
+    if callback then callback ugen else ugen

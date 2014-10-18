@@ -23,4 +23,13 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:name, :email, :password, :password_confirmation, :current_password) }
   end
 
+  def set_json(opt)
+      @json = Hash.new
+      opt.each_pair{|k, v| @json[k] = v}
+      @json[:type] ="text/javascript"
+      @json[:compiled] = Hash.new
+      @json[:compiled][:by] = @current_user ? @current_user.name : "anonymous"
+      @json[:compiled][:at] = Time.now
+      @json.to_json
+  end
 end

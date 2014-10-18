@@ -26,7 +26,7 @@ gem 'nokogiri'
 gem 'rubypython'
 gem 'ruby-lzma'
 gem "bootstrap_flash_messages"
-gem "cinch"
+#gem "cinch"
 #gem "socket.io-rails"
-gem 'ace-helper'
+gem 'ace-helper', "0.0.2"
 gem 'termlib-helper'

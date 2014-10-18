@@ -6,11 +6,15 @@
   <%= create_terminal :rows=> 33, :id=> "termDiv", :editor => "coffee_editor", :custom_commands => {
     :run => {
       :help => "runs code embeeded on ace editor",
-      :exec => "run window.editor.getValue(), (err, js) -> if not err then requestAnimationFrame new Function(js)"
+      :exec => "run window.editor.getValue()"
     },
     :stop => {
       :help => "stop audio",
-      :exec => "stop (err, js) -> if not err then requestAnimationFrame new Function(js)"
+      :exec => "stop()"
+    },
+    :update => {
+      :help => "Update the code running audio",
+      :exec => "stop(); run window.editor.getValue()"
     }
   } %>
 </nav>

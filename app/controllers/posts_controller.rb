@@ -6,6 +6,7 @@ class PostsController < ApplicationController
   before_filter :authenticate_user!, only:[:show, :new, :edit, :update, :destroy]
   before_filter :all_posts_from_current_user, only: [:index]
   before_filter :set_json_compile, only: [:compile]
+  before_filter :set_json_stop, only: [:stop]
 
   # GET /posts
   # GET /posts.json
@@ -33,6 +34,16 @@ class PostsController < ApplicationController
   # GET /posts/1/compile
   # for ajax response
   def compile
+    respond_to do |format|
+      #format.js {render :json => @json}
+      format.json {render(:json => @json, :callback => params['callback'])}
+    end
+  end
+
+  
+  # GET /posts/1/stop
+  # for ajax response
+  def stop
     respond_to do |format|
       #format.js {render :json => @json}
       format.json {render(:json => @json, :callback => params['callback'])}
@@ -98,13 +109,45 @@ class PostsController < ApplicationController
 
     def set_json_compile
       code = decompress_for params[:c]
-      set_json({:callback => CoffeeScript.compile(code, {:bare => true}), :type =>"text/javascript"})
+      # ident code to insert in try block
+      code = code.split("\n").map do |line| 
+        (" "*4) +  line
+      end.join("\n")
+      string_try = "window.update = -> \n  try\n    Gibber.init()\n"
+      string_try << code
+      string_try << """
+    terminal.type \"Compiled at \#{json['compiled']['at']}\"
+    terminal.newLine()
+    terminal.type \"Executing ...\"
+    terminal.newLine()
+    terminal.prompt()
+  catch e
+    terminal.type e
+    terminal.newLine()
+    terminal.prompt()
+"""
+      puts string_try
+      cs = CoffeeScript.compile(string_try, {:bare => true})
+      puts cs
+      set_json({:callback =>cs, :error => !cs})
     end
-      
-    def set_json(opt)
-      @json = Hash.new
-      opt.each_pair{|k, v| @json[k] = v}
-      @json[:done] = Time.now
-      @json.to_json
+
+    def set_json_stop
+      string_try = """window.update = ->
+  try
+    Gibber.clear()
+    terminal.type \"Stopped at \#{json['compiled']['at']}\"
+    terminal.newLine()
+    terminal.prompt()
+  catch e
+    terminal.type e
+    terminal.newLine()
+    terminal.prompt()
+"""
+      puts string_try
+      cs = CoffeeScript.compile(string_try, {:bare => true})
+      puts cs
+      set_json({:callback =>cs, :error => !cs})
     end
+   
 end
