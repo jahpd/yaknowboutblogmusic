@@ -106,48 +106,5 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :doc)
     end
-
-    def set_json_compile
-      code = decompress_for params[:c]
-      # ident code to insert in try block
-      code = code.split("\n").map do |line| 
-        (" "*4) +  line
-      end.join("\n")
-      string_try = "window.update = -> \n  try\n    Gibber.init()\n"
-      string_try << code
-      string_try << """
-    terminal.type \"Compiled at \#{json['compiled']['at']}\"
-    terminal.newLine()
-    terminal.type \"Executing ...\"
-    terminal.newLine()
-    terminal.prompt()
-  catch e
-    terminal.type e
-    terminal.newLine()
-    terminal.prompt()
-"""
-      puts string_try
-      cs = CoffeeScript.compile(string_try, {:bare => true})
-      puts cs
-      set_json({:callback =>cs, :error => !cs})
-    end
-
-    def set_json_stop
-      string_try = """window.update = ->
-  try
-    Gibber.clear();
-    terminal.type \"Stopped at \#{json['compiled']['at']}\"
-    terminal.newLine()
-    terminal.prompt()
-  catch e
-    terminal.type e
-    terminal.newLine()
-    terminal.prompt()
-"""
-      puts string_try
-      cs = CoffeeScript.compile(string_try, {:bare => true})
-      puts cs
-      set_json({:callback =>cs, :error => !cs})
-    end
-   
+  
 end

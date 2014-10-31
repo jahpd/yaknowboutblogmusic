@@ -26,7 +26,6 @@ class ApplicationController < ActionController::Base
   def set_json(opt)
       @json = Hash.new
       opt.each_pair{|k, v| @json[k] = v}
-      @json[:type] ="text/javascript"
       @json[:compiled] = Hash.new
       @json[:compiled][:by] = @current_user ? @current_user.name : "anonymous"
       @json[:compiled][:at] = Time.now

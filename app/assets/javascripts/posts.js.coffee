@@ -32,8 +32,16 @@ checkints = (k, v)->
 
 execute = (url)->
   $.getJSON url, (json) ->
-    (new Function json['callback'])()
+    if json['type'] is "run"
+      terminal.type "Compiled at #{json['compiled']['at']}"
+      fn = new Function json['callback']
+    if json['type'] is "stop"
+      terminal.type "Stopped at #{json['compiled']['at']}"
+      fn = new Function json['callback']
+    fn()
     window.update()
+    terminal.newLine()
+    terminal.prompt()
 
 compress = (data, fn) ->
   url = changecurrenturl 'hear', 'compile'

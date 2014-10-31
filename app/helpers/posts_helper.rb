@@ -138,5 +138,29 @@ module PostsHelper
     hex = lzma.unpack('H*')[0]
   end
 
+  def set_json_compile
+      code = decompress_for params[:c]
+      # ident code to insert in try block
+      code = code.split("\n").map do |line| 
+        (" "*2) +  line
+      end.join("\n")
+
+      string = """window.update = ->
+  if not window.Master then Gibber.init globalize: true, target: window
+"""
+      string << code
+      puts string
+      cs = CoffeeScript.compile(string, {:bare => true})
+      puts cs
+      set_json({:type=> "run", :callback =>cs, :error => !cs})
+    end
+
+    def set_json_stop
+      string = "window.update = -> if window.Master.Out then Gibber.clear()"
+      cs = CoffeeScript.compile(string, {:bare => true})
+      puts cs
+      set_json({:type => "stop", :callback =>cs, :error => !cs})
+    end
+
 end
 

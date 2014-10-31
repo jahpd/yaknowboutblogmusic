@@ -48,33 +48,11 @@ What you will hear if you add more and more?
     i = Synth().note.seq [0, 1, 2, 3, 5, 8, 13, 13, 8, 5, 3, 2, 1, 0], 3
 
 """},
-
-{title: "Simple Synth", doc:"""This is a simple synthesizer described [here](http://bigbadotis.gitbooks.io/gibber-user-manual/content/chapters/audio_synthesizers.html); you give a set of notes (let's say 1) and then give a rythm for it (let's say whole note):
-
-    Synth().note.seq [0], 4
-
-You can add more Synths if you want:
-
-    a = Synth().note.seq [0], 4
-    b = Synth().note.seq [0, 1], 3
-
-Let's try add another one?
-
-    a = Synth().note.seq [0], 4
-    b = Synth().note.seq [0, 1], 3
-    c = Synth().note.seq [0, 1, 2], 2
-
-What you will hear if you add more and more?
-
-    Synth().note.seq [0], 55
-    Synth().note.seq [0, 1], 34
-    Synth().note.seq [0, 1, 2], 21
-    Synth().note.seq [0, 1, 2, 3], 13
-    Synth().note.seq [0, 1, 2, 3, 5, 8], 8
-    Synth().note.seq [0, 1, 2, 3, 5, 8, 13, 21, 34], 5
-    Synth().note.seq [0, 1, 2, 3, 5, 8, 13, 13, 8, 5, 3, 2, 1, 0], 3
-
-"""},
+#######
+#######
+#######
+#######
+#######
 {title: "Change the intensity of synth", doc: """
 
 As you can hear, the previous post have some problems with volume: the sounds are too heavy in intensity ('volume') that some sound creates distortions.
@@ -136,7 +114,40 @@ This can be writed in one more simply way:
 
 Can you simplify the way that synths will be writed?   
 """},
-{title: "Change envelope of your synth", doc:"""Acoustic instruments have what musicians call a 'history of a sound', or more techncaly, an *envelope*. Envelope says to us: _I born, I change and someday I will cease to exist_; think in a one played note on piano or guitar: can we synthesize sounds like this?
+#######
+#######
+#######
+#######
+#######
+{title: "Simplifying synths function", doc:"""Fibonacci series are a set of numbers determined by itself; in music this set can generate dynamic and harmonic music form. One of the proeminents composers using this composition strategy. An way to do this in computational language is:
+
+    fibonacci = (n) ->
+      terminal.type n
+      if n is 0 then 0
+      if n is 1 then 1
+      if n is fibonacci(n-1) + fibonacci(n-2)
+
+Copy previous post's code we can create an set of notes
+
+    fibonacci = (n) ->
+      terminal.type n
+      if n is 0 then 0
+      if n is 1 then 1
+      if n is fibonacci(n-1) + fibonacci(n-2)
+
+    # create synths 
+    synths = (n) -> Synth().note.seq(fibonacci(i) for i in [0..n-1], n)
+
+    # we never cannot amp equal zero
+    synth.amp = fibonacci 1/(_i+1) for synth in synths 7
+
+""" },
+#######
+#######
+#######
+#######
+#######
+{title: "Fibonacci function", doc:"""Fibonacci series are a set of numbers determined by itself; in music this set can generate dynamic and harmonic music form. One of the proeminents composers using this composition strategy 
 
     s = Synth useADSR: true
     s.note.seq [0,1,2,3], 1
@@ -151,11 +162,16 @@ Attack, Decay, Sustain and Release can be named as ADSR:
 ![imagem](http://midsiku.net/midsiku/adsr_envelope01.gif)
 
 """},
+#######
+#######
+#######
+#######
+#######
 {title:"Lounge music", doc: """The original code can be found in [Gibber environment](http://gibber.mat.ucsb.edu/#), so this is a modification to us; it's a simple delay system with some drum pattern as input. A complete explanation about this system can be found [here](http://www.dspguide.com/ch7/1.htm), but summarizing, this is a shift delta function described above:
 
 ![delay](http://www.dspguide.com/graphics/F_7_1.gif)
 
-    a = Drums('x*o*x*o-')
+    a = EDrums('x*o*x*o-')
     a.pitch = 60
 
     b = FM attack:  ms(1000), index: a.Out, cmRatio: 0.75
@@ -167,9 +183,24 @@ Attack, Decay, Sustain and Release can be named as ADSR:
 
 
 """},
+#######
+#######
+#######
+#######
+#######
 {title:"Some other experiment with delays ", doc:"""
 
-    a = Drums('xoooooooox*-x')
+    a = EDrums('xoooooooox*-x')
+
+    # half tempo
+    Clock.rate = .5
+
+    #gradually speed up to original tempo
+    Clock.rate = Line .5,1,8 
+
+    # change time signature
+    Clock.timeSignature = '3/4'
+
     a.pitch = 33
     fm  = FM attack: ms 300, index: a.Out, cmRatio: 0.75
 
